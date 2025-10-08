@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>零基礎也能上手的 AI 自動化實戰班｜n8n + ChatGPT</title>
+  <style>
+    /* ============  Design Tokens  ============ */
+    :root{
+      /* Base (米色系) */
+      --beige-0:#fffdfa;
+      --beige-1:#faf6f0;
+      --beige-2:#f2ece4;
+      --beige-3:#e9e1d6; /* 分區底色 */
+      --ink-1:#1c1f1d;  /* 主文字 */
+      --ink-2:#4f5853;  /* 次文字 */
+
+      /* Green 系（不使用漸層）*/
+      --green-1:#0f3d2e;   /* 深綠標題/導航 */
+      --green-2:#145243;   /* 區塊色條 */
+      --green-3:#1f6b57;   /* 按鈕/重點 */
+      --green-4:#9bd8c1;   /* 亮綠點綴 */
+
+      /* Layout */
+      --radius-lg:18px; --radius-md:12px; --radius-sm:10px;
+      --shadow-sm:0 4px 14px rgba(20,40,32,.08);
+      --shadow-md:0 10px 30px rgba(20,40,32,.12);
+      --border:#e4ded4;
+      --maxw:1040px;
+    }
+
+    /* ============  Global  ============ */
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--beige-1); color:var(--ink-1);
+      font-family:"Inter var","Noto Sans TC",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    img{max-width:100%; display:block}
+    a{color:var(--green-3); text-decoration:none}
+    .container{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+
+    /* ============  Header  ============ */
+    header{position:sticky; top:0; z-index:30; background:#fff; border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm)}
+    .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:36px; height:36px; border-radius:9px; background:var(--green-3)}
+    .brand h1{font-size:16px; letter-spacing:.3px; margin:0; color:var(--green-1)}
+    .nav a{padding:8px 12px; border-radius:10px; color:var(--green-1)}
+    .nav a:hover{background:var(--beige-2)}
+
+    /* ============  Sections  ============ */
+    .section{margin:40px auto; width:calc(100% - 40px); background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm)}
+    .section-inner{padding:28px}
+    .section.stripe{background:var(--beige-3)}
+    .section .eyebrow{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-size:12px; color:var(--green-2); background:var(--beige-2); border:1px solid var(--border)}
+    h2{font-size:28px; line-height:1.25; margin:10px 0 12px; color:var(--green-1)}
+    p{color:var(--ink-2); line-height:1.8; margin:8px 0}
+
+    /* Grid & Cards */
+    .grid-2{display:grid; grid-template-columns:1fr; gap:16px}
+    .card{background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); padding:18px; box-shadow:var(--shadow-sm)}
+    .card.soft{background:var(--beige-1)}
+
+    /* Lists */
+    .list{padding:0; margin:0; list-style:none; display:grid; gap:10px}
+    .list li{display:flex; gap:10px; align-items:flex-start; color:var(--ink-2)}
+    .dot{width:8px; height:8px; border-radius:50%; background:var(--green-3); margin-top:10px; flex:0 0 auto}
+
+    /* Accents */
+    .divider{height:2px; background:var(--beige-2); border-radius:2px; margin:16px 0}
+    .kpis{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+    .kpi{background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center}
+    .kpi b{font-size:22px; color:var(--green-2)}
+
+    /* CTA Buttons */
+    .cta-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
+    .btn{display:inline-flex; align-items:center; justify-content:center; padding:12px 18px; border-radius:12px; font-weight:700; box-shadow:var(--shadow-md)}
+    .btn.primary{background:var(--green-3); color:#fff}
+    .btn.outline{background:#fff; color:var(--green-2); border:1px solid var(--green-3)}
+
+    /* Media blocks */
+    .shots{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px}
+    .shot{position:relative; overflow:hidden; border-radius:14px; border:1px solid var(--border); background:var(--beige-2)}
+    .shot::before{content:""; display:block; padding-bottom:66%}
+
+    /* FAQ */
+    details{border:1px solid var(--border); border-radius:12px; padding:12px 14px; background:#fff}
+    summary{cursor:pointer; color:var(--green-2); font-weight:700}
+
+    /* Footer */
+    footer{padding:28px 0 60px; text-align:center; color:var(--ink-2)}
+
+    /* Responsive */
+    @media(min-width:768px){
+      h2{font-size:36px}
+      .section{width:calc(100% - 120px)}
+      .grid-2{grid-template-columns:1fr 1fr}
+      .kpis{grid-template-columns:repeat(4,1fr)}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>AI 自動化實戰班｜MoBagel x 資訊學院</h1>
+      </div>
+      <nav>
+        <a href="#why">為什麼</a>
+        <a href="#what">你會學到</a>
+        <a href="#cases">實戰案例</a>
+        <a href="#signup">報名</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero / Intro -->
+  <section class="section" id="intro">
+    <div class="section-inner container">
+      <span class="eyebrow">新手友善 · 現場互動 · 可直接上線｜線上可重複觀看</span>
+      <h2>專為零基礎的ai自動化實戰班</h2>
+      <p>多數教學只教你跟著步驟點一點；結果下一次遇到不同情境，還是無法自己設計流程。本課從<b>思維 → 實作 → 上線</b>一路帶你完成，清楚理解觸發、資料處理、條件判斷與系統串接的核心觀念，並把 ChatGPT 接入 n8n，做出<b>真的能運作</b>的工作流。</p>
+      <!-- Hero 主視覺：寬橫幅 -->
+      <img data-src=""C:\Users\zscarlett\OneDrive\桌面\photo\專為0基礎的 AI自動化實戰班.jpg"" alt="AI 自動化課程主視覺" loading="lazy" style="border-radius:16px; margin:20px 0; box-shadow:0 8px 18px rgba(0,0,0,0.08); width:100%; height:auto;">
+      <div class="kpis">
+        <div class="kpi"><b>0 基礎</b><div>無程式背景也能上手</div></div>
+        <div class="kpi"><b>2 條模板</b><div>課後立即套用在工作</div></div>
+        <div class="kpi"><b>現場排錯</b><div>卡關即時解惑</div></div>
+        <div class="kpi"><b>AI 融合</b><div>摘要/分類/產出內容</div></div>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="#signup">立即報名</a>
+        <a class="btn outline" href="#why">先了解課程價值</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why this course -->
+  <section class="section stripe" id="why">$1</h2>
+      <!-- WHY 區：課堂或學員實拍 -->
+      <img data-src="images/why-course.jpg" alt="學員上課實拍照片" loading="lazy" style="border-radius:12px; margin:18px 0; width:100%; height:auto;">
+      <div class="grid-2">
+        <div class="card soft">
+          <p><b>白話思維課</b>：用生活化例子把抽象名詞變具體。你會知道什麼能自動化、為何這樣拆，以及遇到錯誤時到底該查什麼。</p>
+          <div class="divider"></div>
+          <ul class="list">
+            <li><span class="dot"></span><span>拆解公式：觸發 → 處理 → 判斷 → 動作。</span></li>
+            <li><span class="dot"></span><span>錯誤排查：看日誌、抓關鍵字、逐步測。</span></li>
+            <li><span class="dot"></span><span>AI 角色：讓 ChatGPT 變成流程中的智慧助手。</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <p><b>手把手做出能上線的成果</b>：不是停在「做得出範例」，而是能<b>直接運行</b>在你的工作情境。你將帶走兩條模板，回去即用。</p>
+          <div class="divider"></div>
+          <ul class="list">
+            <li><span class="dot"></span><span>晨間資訊快報：RSS→AI 摘要→每日寄信。</span></li>
+            <li><span class="dot"></span><span>表單到文件：表單→Sheet→客製化文件→寄送。</span></li>
+            <li><span class="dot"></span><span>延伸應用：活動報名、客服 ticket、履歷資料庫等。</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What you'll learn -->
+  <section class="section" id="what">
+    <div class="section-inner container">
+      <span class="eyebrow">你會學到什麼</span>
+      <h2>從觀念到實作，一次補齊</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin:0 0 8px;color:var(--green-1)">A. 觀念建立</h3>
+          <ul class="list">
+            <li><span class="dot"></span><span>流程設計：如何判斷可自動化、如何定義輸入/輸出。</span></li>
+            <li><span class="dot"></span><span>資料結構：JSON、欄位對應、常見陷阱。</span></li>
+            <li><span class="dot"></span><span>部署策略：雲端（Zeabur）與本機的取捨。</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 8px;color:var(--green-1)">B. n8n 核心</h3>
+          <ul class="list">
+            <li><span class="dot"></span><span>必備節點：Webhook / Set / If / HTTP Request。</span></li>
+            <li><span class="dot"></span><span>與 ChatGPT 串接：摘要、分類、結構化輸出。</span></li>
+            <li><span class="dot"></span><span>排錯心法：分支、重試、錯誤通知。</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 8px;color:var(--green-1)">C. 進階與維運</h3>
+          <ul class="list">
+            <li><span class="dot"></span><span>版本控制、備份、觀察指標。</span></li>
+            <li><span class="dot"></span><span>跨平台整合：Notion / Slack / CRM API 串接概念。</span></li>
+            <li><span class="dot"></span><span>多模型應用與 RAG 入門。</span></li>
+          </ul>
+        </div>
+        <div class="card soft">
+          <h3 style="margin:0 0 8px;color:var(--green-1)">D. 誰適合</h3>
+          <ul class="list">
+            <li><span class="dot"></span><span>零基礎新手、個人工作者、中小企業營運/行銷/客服。</span></li>
+            <li><span class="dot"></span><span>希望把重複流程自動化、建立可持續的工作流的人。</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="shots" style="margin-top:14px">
+        <div class="shot" title="可替換為課程照片">
+          <img data-src="images/shot-course-1.jpg" alt="課程照片 1" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="shot" title="可替換為介面截圖">
+          <img data-src="images/shot-ui-2.jpg" alt="介面截圖" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="shot" title="可替換為學員實作成果">
+          <img data-src="images/shot-project-3.jpg" alt="學員實作成果" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cases -->
+  <section class="section stripe" id="cases">
+    <div class="section-inner container">
+      <span class="eyebrow">兩個核心案例（簡單版→基礎版→進階版）</span>
+      <h2>實戰一步步升級，確保真的學會</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin:0 0 8px;color:var(--green-1)">$1
+          <!-- 案例 1 流程示意圖 -->
+          <img data-src="images/case1-flow.jpg" alt="晨間資訊快報流程示意圖" loading="lazy" style="border-radius:10px; margin:12px 0; width:100%; height:auto;">
+          <ul class="list">
+            <li><span class="dot"></span><span>來源過濾 → AI 摘要 → Email 推送</span></li>
+            <li><span class="dot"></span><span>可設定時段、頻率與關鍵字</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 8px;color:var(--green-1)">$1
+          <!-- 案例 2 流程示意圖 -->
+          <img data-src="images/case2-flow.jpg" alt="表單到文件自動化流程示意圖" loading="lazy" style="border-radius:10px; margin:12px 0; width:100%; height:auto;">
+          <ul class="list">
+            <li><span class="dot"></span><span>表單 → Sheet → 文件模板 → 郵件寄送</span></li>
+            <li><span class="dot"></span><span>錯誤通知與重試機制</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="#signup">我想做出這兩條流程</a>
+        <a class="btn outline" href="#what">查看課綱重點</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">$1</h2>
+      <!-- FAQ 前的講師/品牌信任圖 -->
+      <img data-src="images/instructor.jpg" alt="講師照片" loading="lazy" style="display:block; margin:16px auto 8px; width:120px; height:120px; border-radius:50%; object-fit:cover; box-shadow:0 6px 16px rgba(0,0,0,.08);">
+      <details><summary>沒有程式背景可以嗎？</summary><p>可以。本課完全以白話與實作帶領，你只需要願意動手做。我們會把「看不懂的名詞」都拆成日常例子。</p></details>
+      <details><summary>需要帶什麼？要先安裝嗎？</summary><p>建議自備筆電。課堂會示範雲端部署（Zeabur）與本機方式，讓你了解各自優缺點。</p></details>
+      <details><summary>課後我能自己延伸嗎？</summary><p>可以。你會帶走 2 條模板與一套完整思維，回去就能改成你的情境；也會附上排錯清單，遇到問題不再卡關。</p></details>
+    </div>
+  </section>
+
+  <!-- Signup -->
+  <section class="section stripe" id="signup">
+    <div class="section-inner container" style="text-align:center">
+      <span class="eyebrow">名額有限</span>
+      <h2>現在就卡位，開始打造你的 AI 自動化助理</h2>
+      <p>點擊下方按鈕前往報名頁。還在觀望也沒關係，先加入等待名單，我們會寄信提醒開放名額。</p>
+      <!-- 報名區：場地或品牌橫幅 -->
+      <img data-src="images/venue-or-brand.jpg" alt="課程場地或品牌橫幅" loading="lazy" style="border-radius:14px; margin:14px 0; width:100%; height:auto;">
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn primary" href="https://example.com/register" target="_blank" rel="noopener">前往報名</a>
+        <a class="btn outline" href="#intro">回到頂部</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © 2025 AI 自動化實戰班｜設計：你的品牌名稱 · 聯絡信箱：<a href="mailto:hello@example.com">hello@example.com</a>
+    </div>
+  </footer>
+  <!-- Enhancement JS: 增加互動與細節美感 -->
+  <script>
+  ;(function(){
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 1) 動態樣式（只補充，不覆蓋原有）
+    const css = `
+      /* Header elevation */
+      header.elevated{ box-shadow: 0 12px 28px rgba(20,40,32,.14) }
+      /* Nav active 狀態 */
+      .nav a.active{ color: var(--green-3); background: var(--beige-2); font-weight: 700 }
+      /* Reveal in */
+      .reveal{ opacity:0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease }
+      .reveal.in{ opacity:1; transform: none }
+      /* FAQ 展開動畫 */
+      details[open]{ animation: open .24s ease }
+      @keyframes open{ from{opacity:.7; transform:translateY(-2px)} to{opacity:1; transform:none} }
+      /* 按鈕波紋 */
+      .ripple-wrap{ position:relative; overflow:hidden; border-radius:12px }
+      .ripple{ position:absolute; border-radius:50%; transform:scale(0); opacity:.35; background:var(--green-4); animation:ripple .6s ease-out }
+      @keyframes ripple{ to{ transform:scale(18); opacity:0 } }
+      /* 浮動回頂按鈕 */
+      .back-top{ position:fixed; right:20px; bottom:24px; z-index:40; padding:12px 14px; border-radius:999px; background:var(--green-3); color:#fff; box-shadow: var(--shadow-md); display:none }
+      .back-top.show{ display:inline-flex }
+      /* 標題複製連結圖示 */
+      .hlink{ opacity:0; margin-left:8px; font-size:14px; color:var(--green-2); cursor:pointer }
+      h2:hover .hlink{ opacity:1 }
+      /* KPI 輕微浮動 */
+      .kpi{ transition: transform .2s ease }
+      .kpi:hover{ transform: translateY(-2px) }
+    `;
+    const style = document.createElement('style');
+    style.id = 'enhance-css';
+    style.textContent = css;
+    document.head.appendChild(style);
+
+    // 2) Header elevation on scroll
+    const header = document.querySelector('header');
+    const elevate = () => header.classList.toggle('elevated', window.scrollY > 8);
+    elevate();
+    window.addEventListener('scroll', elevate, { passive: true });
+
+    // 3) 平滑捲動 + ScrollSpy
+    const navLinks = Array.from(document.querySelectorAll('.nav a[href^="#"]'));
+    navLinks.forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if (el){ e.preventDefault(); el.scrollIntoView({ behavior: prefersReduce? 'auto':'smooth', block:'start' }); }
+      });
+    });
+    const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    if('IntersectionObserver' in window){
+      const spy = new IntersectionObserver(entries =>{
+        entries.forEach(entry =>{
+          const id = '#' + entry.target.id;
+          const link = navLinks.find(a => a.getAttribute('href') === id);
+          if(entry.isIntersecting){
+            navLinks.forEach(x=>x.classList.remove('active'));
+            if(link) link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+      sections.forEach(sec => spy.observe(sec));
+    }
+
+    // 4) Reveal on scroll（自動套用到主要元素）
+    const revealTargets = document.querySelectorAll('.section, .card, .kpi, .shots .shot, details');
+    revealTargets.forEach(el => el.classList.add('reveal'));
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries,obs)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){ entry.target.classList.add('in'); obs.unobserve(entry.target); }
+        });
+      }, { rootMargin: '0px 0px -5% 0px', threshold:.08 });
+      revealTargets.forEach(el=> io.observe(el));
+    }else{
+      revealTargets.forEach(el=> el.classList.add('in'));
+    }
+
+    // 5) 按鈕波紋效果
+    document.querySelectorAll('.btn').forEach(btn =>{
+      btn.classList.add('ripple-wrap');
+      btn.addEventListener('click', e =>{
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        r.style.width = r.style.height = size + 'px';
+        r.style.left = (e.clientX - rect.left - size/2) + 'px';
+        r.style.top  = (e.clientY - rect.top  - size/2) + 'px';
+        btn.appendChild(r);
+        setTimeout(()=> r.remove(), 650);
+      });
+    });
+
+    // 6) FAQ 展開/收合小互動
+    document.querySelectorAll('details').forEach(d =>{
+      d.addEventListener('toggle', () => d.scrollIntoView({ behavior: prefersReduce? 'auto':'smooth', block:'nearest' }));
+    });
+
+    // 7) Back to top 浮動按鈕
+    const backTop = document.createElement('a');
+    backTop.href = '#intro';
+    backTop.className = 'back-top';
+    backTop.textContent = '↑ 回頂部';
+    document.body.appendChild(backTop);
+    const showBackTop = () => backTop.classList.toggle('show', window.scrollY > 600);
+    window.addEventListener('scroll', showBackTop, { passive:true });
+    showBackTop();
+
+    // 8) 標題快速複製連結（#）
+    const toast = (msg)=>{
+      const t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, {
+        position:'fixed', left:'50%', bottom:'22px', transform:'translateX(-50%)',
+        background:'rgba(31,107,87,.98)', color:'#fff', padding:'10px 14px', borderRadius:'10px',
+        boxShadow:'var(--shadow-md)', zIndex:50, fontSize:'14px'
+      });
+      document.body.appendChild(t);
+      setTimeout(()=> t.remove(), 1400);
+    };
+    document.querySelectorAll('h2[id], section h2').forEach(h =>{
+      if(!h.id){ h.id = h.textContent.trim().replace(/\s+/g,'-'); }
+      const link = document.createElement('span');
+      link.className = 'hlink';
+      link.textContent = '#';
+      link.title = '複製這一節的連結';
+      link.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const url = location.origin + location.pathname + '#' + h.id;
+        navigator.clipboard.writeText(url).then(()=> toast('已複製章節連結'));
+      });
+      h.appendChild(link);
+    });
+
+    // 9) 圖片延遲載入（支援 img[data-src]）
+    const lazyImgs = document.querySelectorAll('img[data-src]');
+    if(lazyImgs.length){
+      const lz = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){ const img = entry.target; img.src = img.dataset.src; img.removeAttribute('data-src'); lz.unobserve(img); }
+        });
+      }, { rootMargin:'200px 0px' });
+      lazyImgs.forEach(img=> lz.observe(img));
+    }
+  })();
+  </script>
+</body>
+</html>
