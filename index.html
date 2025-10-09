@@ -4,6 +4,42 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>零基礎也能上手的 AI 自動化實戰班｜n8n + ChatGPT</title>
+  <!-- === 加到 <style> 的最後（覆蓋舊設定） === -->
+<style>
+  /* Promo Offer section（獨立、很顯目） */
+  .promo-offer{ background:var(--beige-0); border:2px solid var(--green-3); box-shadow:var(--shadow-md); position:relative; overflow:hidden }
+  .promo-offer .section-inner{ padding:28px 22px }
+  .promo-badge{ position:absolute; top:16px; left:-36px; transform:rotate(-10deg); background:var(--green-3); color:#fff; padding:6px 44px; font-weight:800; letter-spacing:.5px }
+
+  .promo-offer h2{ margin:8px 0 10px; color:var(--green-1) }
+  .subhead{ color:var(--ink-2); margin:6px 0 2px; font-size:14px }
+
+  .price-row{ display:flex; gap:14px; align-items:flex-end; justify-content:center; flex-wrap:wrap; margin:10px 0 8px }
+  .price-original{ color:var(--ink-2); font-size:16px }
+  .price-original s{ opacity:.7 }
+
+  /* 價錢最大：以 clamp 響應式放大 */
+  .price-now{ display:flex; align-items:baseline; justify-content:center; gap:6px; line-height:1; }
+  .price-now .currency{ font-size:clamp(16px, 3.2vw, 28px); color:var(--green-1); font-weight:800 }
+  .price-now .amount{ font-size:clamp(44px, 12vw, 96px); font-weight:900; letter-spacing:.5px; color:var(--green-1) }
+
+  .tag{ background:var(--green-3); color:#fff; padding:6px 10px; border-radius:999px; font-weight:800 }
+  .price-sub{ color:var(--ink-2); font-size:13px }
+
+  .coupon-box{ margin-top:10px; display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap }
+  .coupon{ border:1px dashed var(--green-3); background:var(--beige-2); padding:10px 12px; border-radius:12px; font-weight:800; letter-spacing:1px }
+
+  .promo-offer .cta-row{ justify-content:center; margin-top:16px }
+  .promo-offer .btn.primary{ font-size:18px; padding:14px 22px }
+
+  /* 手機微調：資訊換行、維持最大價錢 */
+  @media (max-width: 480px){
+    .promo-offer .section-inner{ padding:24px 16px }
+    .price-row{ gap:10px }
+    .price-original{ font-size:14px }
+    .coupon-box span{ font-size:14px }
+  }
+</style>
   <style>
     /* ============  Design Tokens  ============ */
     :root{
@@ -283,41 +319,39 @@
   </section>
 <!-- === 貼在 #signup 後面（footer 之前） === -->
 <!-- === 加到 <style> 的最後（覆蓋舊設定） === -->
-<style>
-  /* Promo Offer section（獨立、很顯目） */
-  .promo-offer{ background:var(--beige-0); border:2px solid var(--green-3); box-shadow:var(--shadow-md); position:relative; overflow:hidden }
-  .promo-offer .section-inner{ padding:28px 22px }
-  .promo-badge{ position:absolute; top:16px; left:-36px; transform:rotate(-10deg); background:var(--green-3); color:#fff; padding:6px 44px; font-weight:800; letter-spacing:.5px }
+<!-- === 貼在 #signup 後面（footer 之前） === -->
+<section class="section promo-offer" id="offer">
+  <div class="section-inner container" style="text-align:center">
+    <span class="promo-badge" aria-hidden="true">個人報名限時優惠</span>
 
-  .promo-offer h2{ margin:8px 0 10px; color:var(--green-1) }
-  .subhead{ color:var(--ink-2); margin:6px 0 2px; font-size:14px }
+    <p class="subhead">中小企業報名免費，個人報名費用：</p>
+    <h2>原價 NT$6,800 → <span class="tag" aria-label="七三折">73 折</span> 現在只要</h2>
 
-  .price-row{ display:flex; gap:14px; align-items:flex-end; justify-content:center; flex-wrap:wrap; margin:10px 0 8px }
-  .price-original{ color:var(--ink-2); font-size:16px }
-  .price-original s{ opacity:.7 }
+    <div class="price-row" role="group" aria-label="價格資訊">
+      <div class="price-original"><s>原價 NT$6,800</s></div>
 
-  /* 價錢最大：以 clamp 響應式放大 */
-  .price-now{ display:flex; align-items:baseline; justify-content:center; gap:6px; line-height:1; }
-  .price-now .currency{ font-size:clamp(16px, 3.2vw, 28px); color:var(--green-1); font-weight:800 }
-  .price-now .amount{ font-size:clamp(44px, 12vw, 96px); font-weight:900; letter-spacing:.5px; color:var(--green-1) }
+      <!-- 價錢最大區 -->
+      <div class="price-now" aria-live="polite">
+        <span class="currency">NT$</span>
+        <span class="amount">5,000</span>
+      </div>
 
-  .tag{ background:var(--green-3); color:#fff; padding:6px 10px; border-radius:999px; font-weight:800 }
-  .price-sub{ color:var(--ink-2); font-size:13px }
+      <div class="price-sub">（四捨五入顯示）</div>
+    </div>
 
-  .coupon-box{ margin-top:10px; display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap }
-  .coupon{ border:1px dashed var(--green-3); background:var(--beige-2); padding:10px 12px; border-radius:12px; font-weight:800; letter-spacing:1px }
+    <div class="coupon-box" role="group" aria-label="折扣碼">
+      <span>輸入優惠碼</span>
+      <code class="coupon" title="請至 mail 確認代碼">（請至 mail 確認）</code>
+      <span>再折 NT$1,000 → <b>NT$4,000</b></span>
+    </div>
 
-  .promo-offer .cta-row{ justify-content:center; margin-top:16px }
-  .promo-offer .btn.primary{ font-size:18px; padding:14px 22px }
+    <div class="cta-row">
+      <a class="btn primary" href="https://example.com/register" target="_blank" rel="noopener">立即搶購優惠</a>
+      <a class="btn outline" href="#faq">看看常見問題</a>
+    </div>
+  </div>
+</section>
 
-  /* 手機微調：資訊換行、維持最大價錢 */
-  @media (max-width: 480px){
-    .promo-offer .section-inner{ padding:24px 16px }
-    .price-row{ gap:10px }
-    .price-original{ font-size:14px }
-    .coupon-box span{ font-size:14px }
-  }
-</style>
 
   <!-- Signup -->
   <section class="section stripe" id="signup">
