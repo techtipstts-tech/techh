@@ -215,9 +215,121 @@
     transform:none !important;
     display:block;
   }
+  /* === 1) Header 導覽列：響應式＋不擠在一起 === */
+.nav{ gap: clamp(6px, 1.2vw, 12px); flex-wrap: wrap; }
+.brand h1{ font-size: clamp(14px, 1.8vw, 18px); }
+.nav a{
+  flex: 0 0 auto;
+  font-size: clamp(12px, 1.6vw, 16px);
+  padding: clamp(6px, 1.2vw, 10px) clamp(10px, 1.8vw, 14px);
+  border-radius: 10px;
+}
+@media (max-width: 560px){
+  /* 小螢幕改成「可橫向滑動」的籤籤列，避免擠在兩行 */
+  .nav{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .nav::-webkit-scrollbar{ height: 6px }
+  .nav a{ display:inline-flex; white-space:nowrap; }
+}
+
+/* === 2) #kits & #tutorials：響應式補強 === */
+#kits h2, #tutorials h2{ font-size: clamp(22px, 3.6vw, 36px); }
+#kits h3, #tutorials h3{ font-size: clamp(16px, 2.4vw, 20px); }
+
+/* 卡片內若有表格：寬度自適應＋不撐破版面 */
+#kits .card:has(table), #tutorials .card:has(table){ overflow:auto; }
+#kits table, #tutorials table{
+  width: 100%;
+  table-layout: fixed;           /* 讓欄寬按比例分配 */
+  border-collapse: collapse;
+  font-size: clamp(12px, 1.8vw, 14px);
+}
+#kits th, #kits td, #tutorials th, #tutorials td{
+  padding: 8px;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;       /* 長字自動換行 */
+  border-bottom: 1px solid var(--beige-2);
+}
+#kits tr:last-child td, #tutorials tr:last-child td{ border-bottom: 0; }
+
+/* IG 影片＆卡片：在小螢幕間距更鬆、滿寬 */
+@media (max-width: 767px){
+  #kits .grid-2, #tutorials .grid-2{ grid-template-columns: 1fr; gap: 14px; }
+  .ig-wrap{ max-width: 100%; }
+}
+
+/* === 3) 流程圖預覽：預設顯示，不再隱藏 === */
+/* 若頁面上還有用 <details> 包住的 flow-card，先把「關閉時不顯示」的規則關掉 */
+.flow-card details:not([open]) .flow-viewport{ display: block !important; }
+/* 直接強制顯示預覽區 */
+.flow-card .flow-viewport{
+  display: block !important;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  max-height: clamp(380px, 70vh, 820px);
+  background: #fff;
+}
+.flow-card .flow-viewport img{
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  border-radius: 0 !important;
+  transform: none !important;
+}
+
+/* === 小修：價格區 clamp 的空白錯字，避免無效 === */
+.price-final .currency{ font-size: clamp(20px, 3.2vw, 30px); }
+
+/* === 讓 #kits、#tutorials 的外框間距與其他 section 完全一致（含響應式）=== */
+#kits.section,
+#tutorials.section{
+  /* 與 .section 相同的外距與寬度規則 */
+  width: calc(100% - 40px);
+  margin: 40px auto;
+}
+@media (min-width: 768px){
+  #kits.section,
+  #tutorials.section{
+    width: calc(100% - 120px);
+  }
+}
+
+/* 內層排版與字級跟著縮放（避免擠） */
+#kits h2, #tutorials h2{ font-size: clamp(22px, 3.6vw, 36px); }
+#kits h3, #tutorials h3{ font-size: clamp(16px, 2.4vw, 20px); }
+#kits .grid-2, #tutorials .grid-2{ align-items:start; gap:16px; }
+@media (max-width: 767px){
+  #kits .grid-2, #tutorials .grid-2{ grid-template-columns:1fr; }
+}
+
+/* 表格在手機不撐版＋可橫向滑動 */
+#kits .card:has(table),
+#tutorials .card:has(table){ overflow:auto; }
+#kits table, #tutorials table{
+  width:100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: clamp(12px, 1.8vw, 14px);
+}
+#kits th, #kits td, #tutorials th, #tutorials td{
+  padding:8px;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  border-bottom:1px solid var(--beige-2);
+}
+#kits tr:last-child td, #tutorials tr:last-child td{ border-bottom:0; }
+
+/* 流程圖預覽：預設顯示、不再隱藏，等比例縮放 */
+.flow-card .flow-viewport{ display:block !important; overflow:auto; border:1px solid var(--border); border-radius:0; max-height: clamp(380px, 70vh, 820px); background:#fff; }
+.flow-card .flow-viewport img{ width:100% !important; height:auto !important; object-fit:contain !important; border-radius:0 !important; transform:none !important; }
+
 </style>
 
-  </style>
 </head>
 <body>
   <!-- Header -->
@@ -406,7 +518,6 @@
         <li><span class="dot"></span><span>輸出欄位：<code>invoice_number</code>、<code>date</code>、<code>store</code>、<code>amount</code>、影像連結</span></li>
       </ul>
       <div class="cta-row">
-        <!-- 下載你的 JSON 範本（可先用這個，之後換成官網檔案路徑） -->
         <a class="btn primary" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" download>下載 n8n 範本（JSON）</a>
         <a class="btn outline" href="#tutorials">看快速教學</a>
       </div>
@@ -436,45 +547,33 @@
         </table>
       </div>
 
-<div class="card">
-  <h3 style="margin:0 0 8px;color:var(--green-1)">示範影片（IG）</h3>
-  <div class="ig-wrap">
-    <blockquote class="instagram-media"
-      data-instgrm-permalink="https://www.instagram.com/p/DP-wNCVkc-I/"
-      data-instgrm-version="14">
-    </blockquote>
-  </div>
-  <script async src="//www.instagram.com/embed.js"></script>
-  <p class="price-note">若無法嵌入，可改放影片連結或教學圖文頁。</p>
-</div>
-
-  <!-- IG 官方嵌入腳本（必要） -->
-  <script async src="//www.instagram.com/embed.js"></script>
-
-  <p class="price-note">若無法嵌入，可改放影片連結或教學圖文頁。</p>
-</div>
-
+      <!-- 右：IG 影片 -->
+      <div class="card">
+        <h3 style="margin:0 0 8px;color:var(--green-1)">示範影片（IG）</h3>
+        <div class="ig-wrap">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DP-wNCVkc-I/" data-instgrm-version="14"></blockquote>
+        </div>
+        <!-- IG 官方嵌入腳本：保留這一支就好 -->
+        <script async src="//www.instagram.com/embed.js"></script>
+        <p class="price-note">若無法嵌入，可改放影片連結或教學圖文頁。</p>
+      </div>
     </div>
 
-    <!-- 流程圖預覽（預設隱藏；展開後只顯示上半段，比例不突兀） -->
-<div class="card soft flow-card" style="margin-top:18px">
-  <h3 style="margin:0 0 8px;color:var(--green-1)">工作流程預覽</h3>
-  <div class="flow-viewport">
-    <img src="22/75035221-0d33-425f-901b-72431a96b20a.jfif"
-         alt="LINE發票上傳自動化流程圖"
-         loading="lazy">
-  </div>
-  <p class="price-note" style="margin-top:8px">
-    流程重點：Webhook 接收 → 下載圖片 → 上傳雲端 → AI 辨識 → 寫入 Google Sheet → 回覆 LINE。
-  </p>
-</div>
-
+    <!-- 流程圖預覽（預設顯示） -->
+    <div class="card soft flow-card" style="margin-top:18px">
+      <h3 style="margin:0 0 8px;color:var(--green-1)">工作流程預覽</h3>
+      <div class="flow-viewport">
+        <img src="22/75035221-0d33-425f-901b-72431a96b20a.jfif" alt="LINE發票上傳自動化流程圖" loading="lazy">
+      </div>
+      <p class="price-note" style="margin-top:8px">流程重點：Webhook 接收 → 下載圖片 → 上傳雲端 → AI 辨識 → 寫入 Google Sheet → 回覆 LINE。</p>
+    </div>
 
     <div class="card soft" style="margin-top:14px">
       <p class="price-note">看完仍覺得自己架不太起來？那這堂課就是替你設計的：現場一步步帶你完成、排錯、上線。</p>
     </div>
   </div>
 </section>
+
 <section class="section stripe" id="tutorials">
   <div class="section-inner container">
     <span class="eyebrow">從 0 到上線</span>
@@ -540,6 +639,58 @@
 
   <!-- FAQ -->
 
+<section class="section" id="faq">
+  <!-- FAQ 前的講師/品牌信任圖 -->
+  <details>
+    <summary>沒有程式背景可以嗎？</summary>
+    <p>可以。本課完全以白話與實作帶領，你只需要願意動手做。我們會把「看不懂的名詞」都拆成日常例子。</p>
+  </details>
+
+  <details>
+    <summary>這課程適合0基礎嗎？</summary>
+    <p>非常適合。課程是針對 0 基礎設計，從思維開始帶你理解 AI 自動化背後的邏輯與應用，不只是「照做」，而是能真正學會怎麼延伸。</p>
+  </details>
+
+  <details>
+    <summary>如果不能使用 ChatGPT 怎麼辦？</summary>
+    <p>別擔心。課程會教你設定 VPN、使用其他生成式 AI 工具（如 Gemini、Perplexity、Claude 等），確保你即使沒有 ChatGPT 也能實作完成。</p>
+  </details>
+
+  <details>
+    <summary>需要帶什麼？要先安裝嗎？</summary>
+    <p>建議自備筆電。課堂會示範雲端部署（Zeabur）與本機方式，讓你了解各自優缺點。</p>
+  </details>
+
+  <details>
+    <summary>課後我能自己延伸嗎？</summary>
+    <p>可以。你會帶走 2 條模板與一套完整思維，回去就能改成你的情境；也會附上排錯清單，遇到問題不再卡關。</p>
+  </details>
+
+  <details>
+    <summary>可以舉辦其他地方嗎？</summary>
+    <p>歡迎填寫報名表單下方許願。</p>
+  </details>
+
+  <details>
+    <summary>不知道是否符合中小企業標準？</summary>
+    <p>可以填寫下方企業問卷，會有專人聯繫。記得電話要接聽，也可直接詢問 MoBagel 郭小姐｜rebeccakuo@mobagel.com｜(02) 7756-3930 #2678。</p>
+  </details>
+
+  <details>
+    <summary>要怎麼確認是否有報名成功？</summary>
+    <p>報名後會有專人以電話聯繫確認，請務必保持電話暢通。</p>
+  </details>
+
+  <details>
+    <summary>如何繳費？</summary>
+    <p>報名成功後，將由專人透過電話說明繳費方式與注意事項。</p>
+  </details>
+
+  <details>
+    <summary>課程時間與地點？</summary>
+    <p>10/31 台北場、11/29 台北場（實體）｜時間：09:00–18:30｜地點：美商行動貝果 MoBagel（台北市信義區東興路51號4樓）。</p>
+  </details>
+</section>
 
 <!-- 貼在 #signup 後面（footer 之前） -->
 <section class="section promo-offer" id="offer">
