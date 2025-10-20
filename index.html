@@ -49,16 +49,49 @@
 #kits table th, #kits table td { border-bottom:1px solid var(--beige-2); }
 #kits table tr:last-child td { border-bottom:0; }
 
-/* 流程圖預覽：展開前後都維持一致比例、不突兀 */
-.flow-card .flow-viewport{
-  overflow:hidden; 
-  border-radius:12px; 
-  border:1px solid var(--border); 
-  max-height:320px;             /* 只顯示大約一半 */
-  transition:max-height .4s ease;
+/* 流程圖預覽：展開前後都維持一致比例、不突兀s */
+.flow-card .flow-viewport{ display:block !important; }
+
+/* --- Kits / Tutorials 響應式加強 --- */
+#kits .grid-2, #tutorials .grid-2 { align-items: start; gap: 16px; }
+#kits .card,  #tutorials .card  { width: 100%; }
+
+/* IG 影片：讓嵌入更穩，手機不跑版 */
+.ig-wrap{ width:100%; max-width:640px; margin:0 auto; }
+.ig-wrap .instagram-media{
+  width:100% !important; max-width:100% !important; min-width:0 !important;
+  margin:0 auto !important; border:0 !important; background:#fff !important;
 }
-details[open] .flow-viewport{ max-height:320px; } /* 展開也維持預覽高度 */
-.flow-card img{ width:100%; display:block; object-fit:cover; transform:translateY(-18%); } /* 裁上半段 */
+
+/* --- n8n 流程圖展開區（響應式+完整顯示、無圓角） --- */
+.flow-card details{ padding:0; border:none; background:transparent; }
+.flow-card summary{
+  list-style:none; cursor:pointer; font-weight:700; color:var(--green-2);
+  padding:0 0 8px 0;
+}
+.flow-card summary::-webkit-details-marker{ display:none; }
+
+/* 關閉時不佔位；展開才顯示 */
+.flow-card details:not([open]) .flow-viewport{ display:none; }
+
+/* 展開後：可捲動、無圓角、完整顯示 */
+.flow-card .flow-viewport{
+  display:block; overflow:auto;
+  border:1px solid var(--border); border-radius:0;
+  max-height:70vh;              /* 依視窗高度自適應 */
+  background:#fff;
+}
+
+/* 圖片完整顯示（不裁切、無圓角） */
+.flow-card .flow-viewport img{
+  width:100%; height:auto; object-fit:contain; border-radius:0; transform:none;
+}
+
+/* 小螢幕排版優化 */
+@media (max-width: 767px){
+  .ig-wrap{ max-width:100%; }
+  .flow-card .flow-viewport{ max-height:60vh; }
+}
 
 </style>
 
@@ -156,6 +189,34 @@ details[open] .flow-viewport{ max-height:320px; } /* 展開也維持預覽高度
       .grid-2{grid-template-columns:1fr 1fr}
       .kpis{grid-template-columns:repeat(4,1fr)}
     }
+
+    <style id="flowcard-square-override">
+  /* 卡片本體 → 方角、不要裁切 */
+  .card.soft.flow-card{
+    border-radius:0 !important;
+    overflow:visible !important;
+  }
+
+  /* 內層容器 → 方角、不裁切、可跟著螢幕縮放 */
+  .card.soft.flow-card .flow-viewport{
+    border-radius:0 !important;
+    overflow:visible !important;
+    border:1px solid var(--border);
+    max-height:none !important;
+    background:#fff;
+  }
+
+  /* 圖片 → 完整顯示、等比例縮放、方角 */
+  .card.soft.flow-card .flow-viewport img{
+    width:100% !important;
+    height:auto !important;
+    object-fit:contain !important;
+    border-radius:0 !important;
+    transform:none !important;
+    display:block;
+  }
+</style>
+
   </style>
 </head>
 <body>
@@ -375,17 +436,17 @@ details[open] .flow-viewport{ max-height:320px; } /* 展開也維持預覽高度
         </table>
       </div>
 
-      <!-- 右：IG 影片 -->
-    <div class="card">
+<div class="card">
   <h3 style="margin:0 0 8px;color:var(--green-1)">示範影片（IG）</h3>
-
-  <!-- IG 影片嵌入 -->
-  <blockquote 
-    class="instagram-media"
-    data-instgrm-permalink="https://www.instagram.com/p/DP-wNCVkc-I/"
-    data-instgrm-version="14"
-    style="background:#FFF; border:0; margin:0 auto; max-width:540px; width:100%">
-  </blockquote>
+  <div class="ig-wrap">
+    <blockquote class="instagram-media"
+      data-instgrm-permalink="https://www.instagram.com/p/DP-wNCVkc-I/"
+      data-instgrm-version="14">
+    </blockquote>
+  </div>
+  <script async src="//www.instagram.com/embed.js"></script>
+  <p class="price-note">若無法嵌入，可改放影片連結或教學圖文頁。</p>
+</div>
 
   <!-- IG 官方嵌入腳本（必要） -->
   <script async src="//www.instagram.com/embed.js"></script>
@@ -396,21 +457,18 @@ details[open] .flow-viewport{ max-height:320px; } /* 展開也維持預覽高度
     </div>
 
     <!-- 流程圖預覽（預設隱藏；展開後只顯示上半段，比例不突兀） -->
-    <div class="card soft flow-card" style="margin-top:18px">
-      <h3 style="margin:0 0 8px;color:var(--green-1)">工作流程預覽</h3>
-      <details>
-        <summary style="cursor:pointer; font-weight:700; color:var(--green-2); margin-bottom:8px">
-          展開查看 n8n 自動化流程圖（LINE 發票上傳 → 雲端 + 表格）
-        </summary>
-        <div class="flow-viewport">
-          <!-- 換成你網站上的圖片路徑；此為目前檔案位置 -->
-          <img src="22\75035221-0d33-425f-901b-72431a96b20a.jfif" alt="LINE發票上傳自動化流程圖">
-        </div>
-      </details>
-      <p class="price-note" style="margin-top:8px">
-        流程重點：Webhook 接收 → 下載圖片 → 上傳雲端 → AI 辨識 → 寫入 Google Sheet → 回覆 LINE。
-      </p>
-    </div>
+<div class="card soft flow-card" style="margin-top:18px">
+  <h3 style="margin:0 0 8px;color:var(--green-1)">工作流程預覽</h3>
+  <div class="flow-viewport">
+    <img src="22/75035221-0d33-425f-901b-72431a96b20a.jfif"
+         alt="LINE發票上傳自動化流程圖"
+         loading="lazy">
+  </div>
+  <p class="price-note" style="margin-top:8px">
+    流程重點：Webhook 接收 → 下載圖片 → 上傳雲端 → AI 辨識 → 寫入 Google Sheet → 回覆 LINE。
+  </p>
+</div>
+
 
     <div class="card soft" style="margin-top:14px">
       <p class="price-note">看完仍覺得自己架不太起來？那這堂課就是替你設計的：現場一步步帶你完成、排錯、上線。</p>
