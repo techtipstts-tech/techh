@@ -45,16 +45,10 @@
     .price-original{ font-size:13px }
     .coupon-box span{ font-size:14px }
   }
-  /* 讓 #kits 的表格更整齊 */
-#kits table th, #kits table td { border-bottom:1px solid var(--beige-2); }
-#kits table tr:last-child td { border-bottom:0; }
 
 /* 流程圖預覽：展開前後都維持一致比例、不突兀s */
 .flow-card .flow-viewport{ display:block !important; }
 
-/* --- Kits / Tutorials 響應式加強 --- */
-#kits .grid-2, #tutorials .grid-2 { align-items: start; gap: 16px; }
-#kits .card,  #tutorials .card  { width: 100%; }
 
 /* IG 影片：讓嵌入更穩，手機不跑版 */
 .ig-wrap{ width:100%; max-width:640px; margin:0 auto; }
@@ -236,31 +230,6 @@
   .nav a{ display:inline-flex; white-space:nowrap; }
 }
 
-/* === 2) #kits & #tutorials：響應式補強 === */
-#kits h2, #tutorials h2{ font-size: clamp(22px, 3.6vw, 36px); }
-#kits h3, #tutorials h3{ font-size: clamp(16px, 2.4vw, 20px); }
-
-/* 卡片內若有表格：寬度自適應＋不撐破版面 */
-#kits .card:has(table), #tutorials .card:has(table){ overflow:auto; }
-#kits table, #tutorials table{
-  width: 100%;
-  table-layout: fixed;           /* 讓欄寬按比例分配 */
-  border-collapse: collapse;
-  font-size: clamp(12px, 1.8vw, 14px);
-}
-#kits th, #kits td, #tutorials th, #tutorials td{
-  padding: 8px;
-  word-wrap: break-word;
-  overflow-wrap: anywhere;       /* 長字自動換行 */
-  border-bottom: 1px solid var(--beige-2);
-}
-#kits tr:last-child td, #tutorials tr:last-child td{ border-bottom: 0; }
-
-/* IG 影片＆卡片：在小螢幕間距更鬆、滿寬 */
-@media (max-width: 767px){
-  #kits .grid-2, #tutorials .grid-2{ grid-template-columns: 1fr; gap: 14px; }
-  .ig-wrap{ max-width: 100%; }
-}
 
 /* === 3) 流程圖預覽：預設顯示，不再隱藏 === */
 /* 若頁面上還有用 <details> 包住的 flow-card，先把「關閉時不顯示」的規則關掉 */
@@ -285,180 +254,8 @@
 /* === 小修：價格區 clamp 的空白錯字，避免無效 === */
 .price-final .currency{ font-size: clamp(20px, 3.2vw, 30px); }
 
-/* === 讓 #kits、#tutorials 的外框間距與其他 section 完全一致（含響應式）=== */
-#kits.section,
-#tutorials.section{
-  /* 與 .section 相同的外距與寬度規則 */
-  width: calc(100% - 40px);
-  margin: 40px auto;
-}
-@media (min-width: 768px){
-  #kits.section,
-  #tutorials.section{
-    width: calc(100% - 120px);
-  }
-}
-/* 確保所有卡片都有獨立間距 */
-#kits .card,
-#tutorials .card{
-  margin-bottom: clamp(16px, 2.5vw, 20px);
-}
 
-/* Grid 加大間距，避免卡片黏在一起 */
-#kits .grid-2,
-#tutorials .grid-2{
-  gap: clamp(18px, 3vw, 24px) !important;
-}
-/* 內層排版與字級跟著縮放（避免擠） */
-#kits h2, #tutorials h2{ font-size: clamp(22px, 3.6vw, 36px); }
-#kits h3, #tutorials h3{ font-size: clamp(16px, 2.4vw, 20px); }
-#kits .grid-2, #tutorials .grid-2{ align-items:start; gap:16px; }
-@media (max-width: 767px){
-  #kits .grid-2, #tutorials .grid-2{ grid-template-columns:1fr; }
-}
 
-/* 表格在手機不撐版＋可橫向滑動 */
-#kits .card:has(table),
-#tutorials .card:has(table){ overflow:auto; }
-#kits table, #tutorials table{
-  width:100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-  font-size: clamp(12px, 1.8vw, 14px);
-}
-#kits th, #kits td, #tutorials th, #tutorials td{
-  padding:8px;
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
-  border-bottom:1px solid var(--beige-2);
-}
-#kits tr:last-child td, #tutorials tr:last-child td{ border-bottom:0; }
-
-/* 流程圖預覽：預設顯示、不再隱藏，等比例縮放 */
-.flow-card .flow-viewport{ display:block !important; overflow:auto; border:1px solid var(--border); border-radius:0; max-height: clamp(380px, 70vh, 820px); background:#fff; }
-.flow-card .flow-viewport img{ width:100% !important; height:auto !important; object-fit:contain !important; border-radius:0 !important; transform:none !important; }
-
-/* === #kits、#tutorials 完整響應式優化 === */
-#kits.section,
-#tutorials.section{
-  width: calc(100% - 40px);
-  margin: 40px auto;
-}
-@media (min-width: 768px){
-  #kits.section,
-  #tutorials.section{
-    width: calc(100% - 120px);
-  }
-}
-
-/* 內層 padding 也要響應式 */
-#kits .section-inner,
-#tutorials .section-inner{
-  padding: clamp(18px, 3vw, 28px);
-}
-
-/* 標題字級響應式 */
-#kits h2, #tutorials h2{ font-size: clamp(22px, 3.6vw, 36px); margin-bottom: clamp(12px, 2vw, 18px); }
-#kits h3, #tutorials h3{ font-size: clamp(16px, 2.4vw, 20px); }
-
-/* === 所有卡片間距響應式 === */
-#kits .card,
-#tutorials .card{
-  padding: clamp(14px, 2.4vw, 18px);
-  margin-bottom: clamp(12px, 2vw, 14px);
-  /* 移除左右 margin，讓卡片貼齊外框 */
-}
-
-/* Grid 間距響應式 */
-#kits .grid-2, 
-#tutorials .grid-2{ 
-  align-items: start; 
-  gap: clamp(14px, 2.4vw, 18px);
-  margin-top: clamp(12px, 2vw, 16px);
-}
-
-@media (max-width: 767px){
-  #kits .grid-2, #tutorials .grid-2{ 
-    grid-template-columns: 1fr; 
-    gap: clamp(12px, 2vw, 14px);
-  }
-}
-
-/* === 表格完整響應式 === */
-#kits .card:has(table),
-#tutorials .card:has(table){ 
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-#kits table, #tutorials table{
-  width: 100%;
-  min-width: 480px; /* 確保表格不會太窄 */
-  table-layout: auto; /* 改用 auto 讓內容決定寬度 */
-  border-collapse: collapse;
-  font-size: clamp(12px, 1.8vw, 14px);
-  margin: clamp(8px, 1.5vw, 12px) 0;
-}
-
-#kits th, #kits td, 
-#tutorials th, #tutorials td{
-  padding: clamp(6px, 1.2vw, 10px);
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
-  border-bottom: 1px solid var(--beige-2);
-  text-align: left;
-  vertical-align: top;
-}
-
-#kits th, #tutorials th{
-  font-weight: 700;
-  background: var(--beige-1);
-  color: var(--green-2);
-}
-
-#kits tr:last-child td, 
-#tutorials tr:last-child td{ 
-  border-bottom: 0; 
-}
-
-/* 手機上表格更緊湊 */
-@media (max-width: 480px){
-  #kits table, #tutorials table{
-    min-width: 420px;
-    font-size: 12px;
-  }
-  #kits th, #kits td,
-  #tutorials th, #tutorials td{
-    padding: 6px 8px;
-  }
-}
-
-/* === List 間距響應式 === */
-#kits .list,
-#tutorials .list{
-  gap: clamp(8px, 1.4vw, 12px);
-  margin: clamp(8px, 1.5vw, 12px) 0;
-}
-
-#kits .list li,
-#tutorials .list li{
-  font-size: clamp(13px, 1.8vw, 15px);
-  line-height: 1.6;
-}
-
-/* === CTA 按鈕間距響應式 === */
-#kits .cta-row,
-#tutorials .cta-row{
-  gap: clamp(8px, 1.6vw, 12px);
-  margin-top: clamp(14px, 2.4vw, 18px);
-  flex-wrap: wrap;
-}
-
-#kits .btn,
-#tutorials .btn{
-  padding: clamp(10px, 1.8vw, 14px) clamp(14px, 2.4vw, 20px);
-  font-size: clamp(13px, 1.8vw, 16px);
-}
 
 /* === IG 影片容器響應式 === */
 .ig-wrap{ 
@@ -544,13 +341,132 @@
   margin-bottom: 0;
 }
 
-/* 段落間距 */
-#kits p,
-#tutorials p{
-  margin: clamp(8px, 1.5vw, 12px) 0;
-  font-size: clamp(13px, 1.8vw, 15px);
-  line-height: 1.7;
+/* ===== 變數沿用（不用改你原本的 root） ===== */
+:root{
+  --beige-0:#fffdfa; --beige-1:#faf6f0; --beige-2:#f2ece4; --beige-3:#e9e1d6;
+  --ink-1:#1c1f1d; --ink-2:#4f5853;
+  --green-1:#0f3d2e; --green-2:#145243; --green-3:#1f6b57; --green-4:#9bd8c1;
+  --radius-lg:18px; --radius-md:12px; --shadow-sm:0 4px 14px rgba(20,40,32,.08); --shadow-md:0 10px 30px rgba(20,40,32,.12);
+  --border:#e4ded4;
 }
+
+/* ===== Kits（#kits-new）===== */
+#kits-new{ background:linear-gradient(135deg,#fff 0%,var(--beige-0) 100%); margin:40px auto; border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm) }
+#kits-new .k-container{ max-width:1200px; margin:0 auto; padding:clamp(24px,4vw,48px) clamp(20px,3vw,40px) }
+#kits-new .k-eyebrow{ display:inline-flex; gap:8px; padding:8px 16px; border-radius:999px; font-size:13px; font-weight:600; color:var(--green-2); background:var(--beige-1); border:1px solid var(--border); margin-bottom:16px }
+#kits-new .k-title{ font-size:clamp(26px,4vw,42px); line-height:1.2; color:var(--green-1); margin-bottom:24px; font-weight:800 }
+
+#kits-new .k-hero{
+  background:linear-gradient(135deg,var(--green-1),var(--green-2));
+  color:#fff; padding:clamp(24px,4vw,36px); border-radius:var(--radius-md);
+  margin-bottom:32px; box-shadow:var(--shadow-md); position:relative; overflow:hidden;
+}
+#kits-new .k-hero::before{ content:''; position:absolute; top:-50%; right:-20%; width:400px; height:400px; background:radial-gradient(circle,rgba(155,216,193,.15) 0%, transparent 70%); border-radius:50% }
+#kits-new .k-hero-title{ color:var(--green-4); font-size:clamp(20px,3vw,28px); margin-bottom:16px }
+#kits-new .k-hero-desc{ color:rgba(255,255,255,.95); font-size:clamp(15px,2vw,17px); line-height:1.7; margin-bottom:20px }
+
+#kits-new .k-tags{ display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 }
+#kits-new .k-tag{ background:rgba(255,255,255,.15); backdrop-filter:blur(10px); color:#fff; padding:6px 12px; border-radius:6px; font-size:13px; font-weight:600; border:1px solid rgba(255,255,255,.2) }
+
+#kits-new .k-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:20px }
+#kits-new .k-btn{ display:inline-flex; align-items:center; justify-content:center; padding:14px 24px; border-radius:12px; font-weight:700; font-size:15px; text-decoration:none; transition:all .3s ease; cursor:pointer; border:none }
+#kits-new .k-btn-primary{ background:#fff; color:var(--green-2); box-shadow:0 4px 12px rgba(0,0,0,.15) }
+#kits-new .k-btn-primary:hover{ transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.2) }
+#kits-new .k-btn-outline{ background:transparent; color:#fff; border:2px solid rgba(255,255,255,.4) }
+#kits-new .k-btn-outline:hover{ background:rgba(255,255,255,.1); border-color:#fff }
+
+#kits-new .k-grid{ display:grid; grid-template-columns:1fr; gap:24px; margin-bottom:32px }
+@media (min-width:768px){ #kits-new .k-grid{ grid-template-columns:1fr 1fr } }
+
+#kits-new .k-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); padding:clamp(20px,3vw,28px); box-shadow:var(--shadow-sm); transition:all .3s ease }
+#kits-new .k-card:hover{ box-shadow:var(--shadow-md); transform:translateY(-2px) }
+
+#kits-new .k-table{ padding:0; overflow:hidden }
+#kits-new .k-card-head{ background:var(--beige-1); padding:16px 24px; border-bottom:1px solid var(--border) }
+#kits-new .k-card-head h3{ margin:0; display:flex; align-items:center; gap:8px }
+#kits-new .k-card-head h3::before{ content:'📊'; font-size:20px }
+#kits-new .k-data{ width:100%; border-collapse:collapse }
+#kits-new .k-data thead{ background:var(--green-1); color:#fff }
+#kits-new .k-data th, #kits-new .k-data td{ padding:14px 18px; text-align:left; font-size:14px }
+#kits-new .k-data th{ font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:.5px }
+#kits-new .k-data tbody tr{ border-bottom:1px solid var(--border); transition:background .2s ease }
+#kits-new .k-data tbody tr:hover{ background:var(--beige-1) }
+#kits-new .k-data code{ background:var(--beige-2); padding:2px 6px; border-radius:4px; font-family:monospace; font-size:12px; color:var(--green-2) }
+
+#kits-new .k-video{ background:linear-gradient(135deg,var(--beige-1),#fff) }
+#kits-new .k-video h3::before{ content:'🎬'; margin-right:8px }
+#kits-new .k-video-wrap{ position:relative; width:100%; max-width:640px; margin:20px auto; border-radius:12px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.12) }
+#kits-new .k-note{ text-align:center; color:var(--ink-2); font-size:14px; margin-top:12px }
+
+#kits-new .k-flow{ background:var(--beige-0); border:2px dashed var(--green-3) }
+#kits-new .k-flow-title{ display:flex; align-items:center; gap:10px; color:var(--green-2) }
+#kits-new .k-flow-title::before{ content:'🔄'; font-size:24px }
+#kits-new .k-flow-view{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:20px; margin:20px 0; overflow:auto; max-height:500px }
+#kits-new .k-flow-view img{ width:100%; height:auto; border-radius:6px; display:block }
+#kits-new .k-info{ background:var(--beige-1); border-left:4px solid var(--green-3); padding:16px 20px; border-radius:8px; font-size:14px; color:var(--ink-2); line-height:1.7 }
+
+#kits-new .k-center{ text-align:center }
+#kits-new .k-soft{ background:var(--beige-1) }
+#kits-new .k-btn-solid{ display:inline-flex; margin-top:8px; background:var(--green-3); color:#fff }
+
+/* RWD */
+@media (max-width:767px){
+  #kits-new .k-container{ padding:24px 18px }
+  #kits-new .k-data{ font-size:13px }
+  #kits-new .k-data th, #kits-new .k-data td{ padding:10px 12px }
+  #kits-new .k-cta{ flex-direction:column }
+  #kits-new .k-btn{ width:100%; justify-content:center }
+}
+
+/* ===== Tutorials（#tutorials-new）===== */
+#tutorials-new{ background:var(--beige-3); margin:40px auto; border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm) }
+#tutorials-new .t-container{ max-width:1200px; margin:0 auto; padding:clamp(24px,4vw,48px) clamp(20px,3vw,40px) }
+#tutorials-new .t-eyebrow{ display:inline-flex; gap:8px; padding:8px 16px; border-radius:999px; font-size:13px; font-weight:600; color:var(--green-2); background:var(--beige-1); border:1px solid var(--border); margin-bottom:16px }
+#tutorials-new .t-title{ font-size:clamp(26px,4vw,42px); line-height:1.2; color:var(--green-1); margin-bottom:24px; font-weight:800 }
+
+#tutorials-new .t-grid{ display:grid; grid-template-columns:1fr; gap:20px }
+@media (min-width:768px){ #tutorials-new .t-grid{ grid-template-columns:repeat(2,1fr) } }
+
+#tutorials-new .t-step{
+  background:#fff; border-radius:var(--radius-md); padding:24px; box-shadow:var(--shadow-sm);
+  position:relative; transition:all .3s ease; border:2px solid transparent;
+}
+#tutorials-new .t-step:hover{ border-color:var(--green-3); box-shadow:var(--shadow-md); transform:translateY(-4px) }
+#tutorials-new .t-step-no{
+  position:absolute; top:-12px; left:20px; width:40px; height:40px;
+  background:linear-gradient(135deg,var(--green-3),var(--green-2)); color:#fff; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; box-shadow:0 4px 12px rgba(31,107,87,.3);
+}
+#tutorials-new .t-list{ list-style:none; margin:16px 0 }
+#tutorials-new .t-list li{ padding:12px 0 12px 28px; position:relative; color:var(--ink-2); line-height:1.7; border-bottom:1px solid var(--beige-2) }
+#tutorials-new .t-list li:last-child{ border-bottom:none }
+#tutorials-new .t-list li::before{ content:'→'; position:absolute; left:0; color:var(--green-3); font-weight:bold; font-size:18px }
+#tutorials-new .t-list b{ color:var(--green-2) }
+#tutorials-new .t-list code{ background:var(--beige-1); padding:3px 8px; border-radius:4px; font-family:monospace; font-size:13px; color:var(--green-2); border:1px solid var(--border) }
+
+#tutorials-new .t-code{ background:var(--green-1); color:var(--green-4); padding:16px 20px; border-radius:8px; font-family:monospace; font-size:13px; overflow-x:auto; margin:16px 0; border:1px solid var(--green-2) }
+#tutorials-new .t-code code{ background:transparent; color:inherit }
+
+#tutorials-new .t-alert{ background:linear-gradient(135deg,#fff9e6 0%,#fff 100%); border:2px solid #f9d77e }
+#tutorials-new .t-alert .t-alert-list{ list-style:none; margin-top:12px }
+#tutorials-new .t-alert .t-alert-list li{ padding:10px 0 10px 24px; position:relative; color:var(--ink-2); line-height:1.6 }
+#tutorials-new .t-alert .t-alert-list li::before{ content:'•'; position:absolute; left:8px; color:#f9d77e; font-size:20px; font-weight:bold }
+
+#tutorials-new .t-final{ background:linear-gradient(135deg,var(--green-1),var(--green-2)); color:#fff; text-align:center; padding:40px 30px; border-radius:var(--radius-md); margin-top:40px; box-shadow:var(--shadow-md) }
+#tutorials-new .t-final h3{ color:var(--green-4); font-size:clamp(22px,3vw,32px); margin-bottom:16px }
+#tutorials-new .t-final p{ color:rgba(255,255,255,.9); font-size:16px; margin-bottom:24px; max-width:600px; margin-inline:auto }
+#tutorials-new .t-cta{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap }
+#tutorials-new .t-btn{ display:inline-flex; align-items:center; justify-content:center; padding:14px 24px; border-radius:12px; font-weight:700; font-size:15px; text-decoration:none; transition:all .3s ease; cursor:pointer; border:none }
+#tutorials-new .t-btn-primary{ background:#fff; color:var(--green-2) }
+#tutorials-new .t-btn-outline{ background:transparent; color:#fff; border:2px solid rgba(255,255,255,.4) }
+
+@media (max-width:767px){
+  #tutorials-new .t-container{ padding:24px 18px }
+  #tutorials-new .t-step{ padding:20px 16px }
+  #tutorials-new .t-cta{ flex-direction:column }
+  #tutorials-new .t-btn{ width:100%; justify-content:center }
+}
+
 </style>
 
 </head>
@@ -566,7 +482,7 @@
         <a href="#why">為什麼</a>
         <a href="#what">你會學到</a>
         <a href="#cases">實戰案例</a>
-        <a href="#kits">範本下載</a>       <!-- 新增 -->
+        <a href="#kits-new">範本下載</a>       <!-- 新增 -->
         <a href="#tutorials">教學</a>       <!-- 新增 -->
         <a href="#signup">報名</a>
       </nav>
@@ -727,135 +643,133 @@
   </div>
 </section>
 
-<section class="section" id="kits">
-  <div class="section-inner container">
-    <span class="eyebrow">拿了就能用 · 一鍵匯入 n8n</span>
-    <h2>LINE 發票自動記帳：免費範本下載</h2>
+<section id="kits-new" class="k-section">
+  <div class="k-container">
+    <span class="k-eyebrow">拿了就能用 · 一鍵匯入 n8n</span>
+    <h2 class="k-title">LINE 發票自動記帳：免費範本下載</h2>
 
-    <div class="card" style="margin-bottom:14px">
-      <p class="soft">
-        使用者把發票照片傳到 LINE → 自動上傳 Google Drive → AI 讀出「發票號碼／日期／店家／金額」→ 寫進 Google 試算表 → 回傳 LINE 成功訊息。
-      </p>
-      <ul class="list">
-        <li><span class="dot"></span><span>關鍵節點：<b>Webhook（LINE）/ HTTP Request（抓圖與回覆）/ Google Drive / Google Sheets / AI 節點 / Set / If</b></span></li>
-        <li><span class="dot"></span><span>輸出欄位：<code>invoice_number</code>、<code>date</code>、<code>store</code>、<code>amount</code>、影像連結</span></li>
-      </ul>
-      <div class="cta-row">
-        <a class="btn primary" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" download>下載 n8n 範本（JSON）</a>
-        <a class="btn outline" href="#tutorials">看快速教學</a>
+    <div class="k-hero">
+      <h3 class="k-hero-title">完整自動化流程，立即可用</h3>
+      <p class="k-hero-desc">使用者把發票照片傳到 LINE → 自動上傳 Google Drive → AI 讀出「發票號碼／日期／店家／金額」→ 寫進 Google 試算表 → 回傳 LINE 成功訊息</p>
+      <div class="k-tags">
+        <span class="k-tag">Webhook（LINE）</span><span class="k-tag">HTTP Request</span>
+        <span class="k-tag">Google Drive</span><span class="k-tag">Google Sheets</span>
+        <span class="k-tag">AI 節點</span><span class="k-tag">Set / If</span>
+      </div>
+      <div class="k-cta">
+        <a class="k-btn k-btn-primary" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" target="_blank">下載 n8n 範本（JSON）</a>
+        <a class="k-btn k-btn-outline" href="#tutorials-new">查看快速教學 →</a>
       </div>
     </div>
 
-    <!-- 左表格｜右 IG 影片 -->
-    <div class="grid-2">
-      <!-- 左：Sheet 欄位建議 -->
-      <div class="card">
-        <h3 style="margin:0 0 8px;color:var(--green-1)">資料寫入欄位（Sheet 建議欄）</h3>
-        <table style="width:100%; border-collapse:collapse; font-size:14px">
-          <thead>
-            <tr>
-              <th style="text-align:left; padding:8px">欄位</th>
-              <th style="text-align:left; padding:8px">說明</th>
-              <th style="text-align:left; padding:8px">範例</th>
-            </tr>
-          </thead>
+    <div class="k-grid">
+      <div class="k-card k-table">
+        <div class="k-card-head"><h3>資料寫入欄位（Sheet 建議欄）</h3></div>
+        <!-- 直接把你原本的 <table> 放進來即可 -->
+        <!-- 例： -->
+        <table class="k-data">
+          <thead><tr><th>欄位</th><th>說明</th><th>範例</th></tr></thead>
           <tbody>
-            <tr><td style="padding:8px">發票號碼</td><td style="padding:8px">AI 解析出的號碼</td><td style="padding:8px">AB-12345678</td></tr>
-            <tr><td style="padding:8px">日期</td><td style="padding:8px">消費日期（YYYY-MM-DD）</td><td style="padding:8px">2025-06-18</td></tr>
-            <tr><td style="padding:8px">店家名稱</td><td style="padding:8px">消費店家</td><td style="padding:8px">黃燜雞／高雄新興店</td></tr>
-            <tr><td style="padding:8px">金額</td><td style="padding:8px">僅數字（自動清洗）</td><td style="padding:8px">190</td></tr>
-            <tr><td style="padding:8px">影像連結</td><td style="padding:8px">Drive 檔案連結</td><td style="padding:8px">https://drive.google.com/…</td></tr>
-            <tr><td style="padding:8px">建立時間</td><td style="padding:8px">系統時間</td><td style="padding:8px">2025-10-20 09:21</td></tr>
+            <tr><td><strong>發票號碼</strong></td><td>AI 解析出的號碼</td><td><code>AB-12345678</code></td></tr>
+            <tr><td><strong>日期</strong></td><td>消費日期（YYYY-MM-DD）</td><td><code>2025-06-18</code></td></tr>
+            <tr><td><strong>店家名稱</strong></td><td>消費店家</td><td>黃燜雞／高雄新興店</td></tr>
+            <tr><td><strong>金額</strong></td><td>僅數字（自動清洗）</td><td><code>190</code></td></tr>
+            <tr><td><strong>影像連結</strong></td><td>Drive 檔案連結</td><td><code>https://drive.google.com/…</code></td></tr>
+            <tr><td><strong>建立時間</strong></td><td>系統時間</td><td><code>2025-10-20 09:21</code></td></tr>
           </tbody>
         </table>
       </div>
 
-      <!-- 右：IG 影片 -->
-      <div class="card">
-        <h3 style="margin:0 0 8px;color:var(--green-1)">示範影片（IG）</h3>
-        <div class="ig-wrap">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DP-wNCVkc-I/" data-instgrm-version="14"></blockquote>
+      <div class="k-card k-video">
+        <h3>示範影片（IG）</h3>
+        <div class="k-video-wrap">
+          <div class="ig-wrap">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DP-wNCVkc-I/" data-instgrm-version="14"></blockquote>
+          </div>
         </div>
-        <!-- IG 官方嵌入腳本：保留這一支就好 -->
         <script async src="//www.instagram.com/embed.js"></script>
-        <p class="price-note">若無法嵌入，可改放影片連結或教學圖文頁。</p>
+        <p class="k-note">若無法嵌入，可改放影片連結或教學圖文頁</p>
       </div>
     </div>
 
-    <!-- 流程圖預覽（預設顯示） -->
-    <div class="card soft flow-card" style="margin-top:18px">
-      <h3 style="margin:0 0 8px;color:var(--green-1)">工作流程預覽</h3>
-      <div class="flow-viewport">
+    <div class="k-card k-flow">
+      <h3 class="k-flow-title">工作流程預覽</h3>
+      <div class="k-flow-view">
         <img src="22/75035221-0d33-425f-901b-72431a96b20a.jfif" alt="LINE發票上傳自動化流程圖" loading="lazy">
       </div>
-      <p class="price-note" style="margin-top:8px">流程重點：Webhook 接收 → 下載圖片 → 上傳雲端 → AI 辨識 → 寫入 Google Sheet → 回覆 LINE。</p>
+      <div class="k-info"><strong>流程重點：</strong> Webhook 接收 → 下載圖片 → 上傳雲端 → AI 辨識 → 寫入 Google Sheet → 回覆 LINE</div>
     </div>
 
-    <div class="card soft" style="margin-top:14px">
-      <p class="price-note">看完仍覺得自己架不太起來？那這堂課就是替你設計的：現場一步步帶你完成、排錯、上線。</p>
+    <div class="k-card k-center k-soft">
+      <p>看完仍覺得自己架不太起來？那這堂課就是替你設計的：<br><strong>現場一步步帶你完成、排錯、上線</strong></p>
+      <a class="k-btn k-btn-solid" href="#signup">立即報名實戰班</a>
     </div>
   </div>
 </section>
 
-<section class="section stripe" id="tutorials">
-  <div class="section-inner container">
-    <span class="eyebrow">從 0 到上線</span>
-    <h2>LINE × n8n × Google：快速串接教學</h2>
 
-    <div class="grid-2" style="gap: clamp(18px, 3vw, 24px);">
-      <!-- A -->
-      <div class="card" style="margin-bottom: clamp(16px, 2.5vw, 20px);">
-        <h3 style="margin:0 0 12px;color:var(--green-1)">A. 建立 LINE Messaging API</h3>
-        <ol style="margin:0; padding-left:18px; line-height:1.9; color:var(--ink-2)">
-          <li>到 LINE Developers 建立 Channel（Messaging API）。</li>
-          <li>開啟 Webhook，將 <b>n8n Webhook URL</b> 貼上並驗證。</li>
-          <li>複製 <b>Channel access token</b>，在 n8n 設定 <b>HTTP Bearer</b> 憑證（用於抓圖與回覆）。</li>
-        </ol>
-        <ul class="list" style="margin-top:10px">
-          <li><span class="dot"></span><span>抓圖片：<code>GET https://api-data.line.me/v2/bot/message/{messageId}/content</code></span></li>
-          <li><span class="dot"></span><span>回覆訊息：<code>POST https://api.line.me/v2/bot/message/reply</code>（Body 需帶 <code>replyToken</code>）</span></li>
+<section id="tutorials-new" class="t-section">
+  <div class="t-container">
+    <span class="t-eyebrow">從 0 到上線</span>
+    <h2 class="t-title">LINE × n8n × Google：快速串接教學</h2>
+
+    <div class="t-grid">
+      <div class="t-step">
+        <div class="t-step-no">A</div>
+        <h3>建立 LINE Messaging API</h3>
+        <ul class="t-list">
+          <li>到 LINE Developers 建立 Channel（Messaging API）</li>
+          <li>開啟 Webhook，將 <b>n8n Webhook URL</b> 貼上並驗證</li>
+          <li>複製 <b>Channel access token</b>，在 n8n 設定 <b>HTTP Bearer</b> 憑證</li>
+        </ul>
+        <div class="t-code"><div>抓圖片：</div><code>GET https://api-data.line.me/v2/bot/message/{messageId}/content</code></div>
+        <div class="t-code"><div>回覆訊息：</div><code>POST https://api.line.me/v2/bot/message/reply</code></div>
+      </div>
+
+      <div class="t-step">
+        <div class="t-step-no">B</div>
+        <h3>n8n 流程骨架（與範本一致）</h3>
+        <ul class="t-list">
+          <li><b>Webhook</b>：接 LINE 事件，取得 <code>replyToken</code> 與 <code>message.id</code></li>
+          <li><b>HTTP Request</b>（抓圖）：用 Bearer Token 取回圖片（binary）</li>
+          <li><b>Google Drive</b>：以 <code>message.id.jpg</code> 存入指定資料夾</li>
+          <li><b>AI 節點</b>：限制輸出固定 JSON（號碼／日期／店家／金額）</li>
+          <li><b>Set / If</b>：清洗欄位與缺漏檢查（例如金額只留數字）</li>
+          <li><b>Google Sheets</b>：<b>appendOrUpdate</b> 寫入欄位</li>
+          <li><b>HTTP Request</b>（回覆）：把結果文字回傳 LINE（帶 <code>replyToken</code>）</li>
         </ul>
       </div>
 
-      <!-- B -->
-      <div class="card" style="margin-bottom: clamp(16px, 2.5vw, 20px);">
-        <h3 style="margin:0 0 12px;color:var(--green-1)">B. n8n 流程骨架（與範本一致）</h3>
-        <ul class="list">
-          <li><span class="dot"></span><span><b>Webhook</b>：接 LINE 事件，取得 <code>replyToken</code> 與 <code>message.id</code></span></li>
-          <li><span class="dot"></span><span><b>HTTP Request</b>（抓圖）：用 Bearer Token 取回圖片（binary）</span></li>
-          <li><span class="dot"></span><span><b>Google Drive</b>：以 <code>message.id.jpg</code> 存入指定資料夾</span></li>
-          <li><span class="dot"></span><span><b>AI 節點</b>：提示詞限制輸出固定 JSON（號碼／日期／店家／金額）</span></li>
-          <li><span class="dot"></span><span><b>Set / If</b>：清洗欄位與缺漏檢查（例如金額只留數字）</span></li>
-          <li><span class="dot"></span><span><b>Google Sheets</b>：<b>appendOrUpdate</b> 寫入欄位</span></li>
-          <li><span class="dot"></span><span><b>HTTP Request</b>（回覆）：把結果文字回傳 LINE（帶 <code>replyToken</code>）</span></li>
+      <div class="t-step">
+        <div class="t-step-no">C</div>
+        <h3>憑證與欄位設定</h3>
+        <ul class="t-list">
+          <li>LINE：<b>HTTP Bearer</b> 憑證（Channel access token）</li>
+          <li>Google Drive／Sheets：用 <b>OAuth2</b> 綁定；指定資料夾與試算表</li>
+          <li>AI 模型：OpenAI Key；無法使用時可改 Gemini／Claude／Perplexity</li>
         </ul>
+        <div class="t-tip"><strong>💡 提示：</strong> 先在測試環境驗證憑證，再正式部署</div>
       </div>
 
-      <!-- C -->
-      <div class="card" style="margin-bottom: clamp(16px, 2.5vw, 20px);">
-        <h3 style="margin:0 0 12px;color:var(--green-1)">C. 憑證與欄位設定</h3>
-        <ul class="list">
-          <li><span class="dot"></span><span>LINE：<b>HTTP Bearer</b> 憑證（Channel access token）。</span></li>
-          <li><span class="dot"></span><span>Google Drive／Sheets：用 <b>OAuth2</b> 綁定；指定資料夾與試算表。</span></li>
-          <li><span class="dot"></span><span>AI 模型：OpenAI Key；若無法使用，改用 Gemini／Claude／Perplexity（替換節點即可）。</span></li>
-        </ul>
-      </div>
-
-      <!-- D -->
-      <div class="card soft" style="margin-bottom: clamp(16px, 2.5vw, 20px);">
-        <h3 style="margin:0 0 12px;color:var(--green-1)">D. 常見錯誤 & 快速排除</h3>
-        <ul class="list">
-          <li><span class="dot"></span><span>401／403：Bearer Token 或 Google 憑證未綁對 → 重新驗證。</span></li>
-          <li><span class="dot"></span><span>圖片未存：Drive 節點需選正確 <b>binary</b> 欄位；檔名可用 <code>{{ $json.body.events[0].message.id }}.jpg</code>。</span></li>
-          <li><span class="dot"></span><span>AI 非 JSON：提示只允許 JSON；後面加 Function 做 <code>try/catch</code>。</span></li>
-          <li><span class="dot"></span><span>金額亂碼：用 Set + 正則只留數字與小數點。</span></li>
+      <div class="t-step t-alert">
+        <div class="t-step-no">D</div>
+        <h3>常見錯誤 & 快速排除</h3>
+        <ul class="t-alert-list">
+          <li><strong>401／403：</strong>Bearer Token 或 Google 憑證未綁對 → 重新驗證</li>
+          <li><strong>圖片未存：</strong>Drive 節點需選正確 <b>binary</b> 欄位；檔名可用 <code>{{ $json.body.events[0].message.id }}.jpg</code></li>
+          <li><strong>AI 非 JSON：</strong>提示只允許 JSON；後面加 Function 做 <code>try/catch</code></li>
+          <li><strong>金額亂碼：</strong>用 Set + 正則只留數字與小數點</li>
         </ul>
       </div>
     </div>
 
-    <div class="cta-row" style="margin-top: clamp(20px, 3vw, 28px);">
-      <a class="btn primary" href="#signup">想現場帶著做、當場上線</a>
-      <a class="btn outline" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" download>再次下載 JSON 範本</a>
+    <div class="t-final">
+      <h3>準備好動手實作了嗎？</h3>
+      <p>加入實戰班，現場帶著做、當場上線，所有疑問立即解答</p>
+      <div class="t-cta">
+        <a class="t-btn t-btn-primary" href="#signup">我要現場學習</a>
+        <a class="t-btn t-btn-outline" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" target="_blank">下載 JSON 範本</a>
+      </div>
     </div>
   </div>
 </section>
