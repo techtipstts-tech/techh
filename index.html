@@ -45,6 +45,21 @@
     .price-original{ font-size:13px }
     .coupon-box span{ font-size:14px }
   }
+  /* 讓 #kits 的表格更整齊 */
+#kits table th, #kits table td { border-bottom:1px solid var(--beige-2); }
+#kits table tr:last-child td { border-bottom:0; }
+
+/* 流程圖預覽：展開前後都維持一致比例、不突兀 */
+.flow-card .flow-viewport{
+  overflow:hidden; 
+  border-radius:12px; 
+  border:1px solid var(--border); 
+  max-height:320px;             /* 只顯示大約一半 */
+  transition:max-height .4s ease;
+}
+details[open] .flow-viewport{ max-height:320px; } /* 展開也維持預覽高度 */
+.flow-card img{ width:100%; display:block; object-fit:cover; transform:translateY(-18%); } /* 裁上半段 */
+
 </style>
 
   <style>
@@ -155,6 +170,8 @@
         <a href="#why">為什麼</a>
         <a href="#what">你會學到</a>
         <a href="#cases">實戰案例</a>
+        <a href="#kits">範本下載</a>       <!-- 新增 -->
+        <a href="#tutorials">教學</a>       <!-- 新增 -->
         <a href="#signup">報名</a>
       </nav>
     </div>
@@ -314,60 +331,157 @@
   </div>
 </section>
 
+<section class="section" id="kits">
+  <div class="section-inner container">
+    <span class="eyebrow">拿了就能用 · 一鍵匯入 n8n</span>
+    <h2>LINE 發票自動記帳：免費範本下載</h2>
+
+    <div class="card" style="margin-bottom:14px">
+      <p class="soft">
+        使用者把發票照片傳到 LINE → 自動上傳 Google Drive → AI 讀出「發票號碼／日期／店家／金額」→ 寫進 Google 試算表 → 回傳 LINE 成功訊息。
+      </p>
+      <ul class="list">
+        <li><span class="dot"></span><span>關鍵節點：<b>Webhook（LINE）/ HTTP Request（抓圖與回覆）/ Google Drive / Google Sheets / AI 節點 / Set / If</b></span></li>
+        <li><span class="dot"></span><span>輸出欄位：<code>invoice_number</code>、<code>date</code>、<code>store</code>、<code>amount</code>、影像連結</span></li>
+      </ul>
+      <div class="cta-row">
+        <!-- 下載你的 JSON 範本（可先用這個，之後換成官網檔案路徑） -->
+        <a class="btn primary" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" download>下載 n8n 範本（JSON）</a>
+        <a class="btn outline" href="#tutorials">看快速教學</a>
+      </div>
+    </div>
+
+    <!-- 左表格｜右 IG 影片 -->
+    <div class="grid-2">
+      <!-- 左：Sheet 欄位建議 -->
+      <div class="card">
+        <h3 style="margin:0 0 8px;color:var(--green-1)">資料寫入欄位（Sheet 建議欄）</h3>
+        <table style="width:100%; border-collapse:collapse; font-size:14px">
+          <thead>
+            <tr>
+              <th style="text-align:left; padding:8px">欄位</th>
+              <th style="text-align:left; padding:8px">說明</th>
+              <th style="text-align:left; padding:8px">範例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:8px">發票號碼</td><td style="padding:8px">AI 解析出的號碼</td><td style="padding:8px">AB-12345678</td></tr>
+            <tr><td style="padding:8px">日期</td><td style="padding:8px">消費日期（YYYY-MM-DD）</td><td style="padding:8px">2025-06-18</td></tr>
+            <tr><td style="padding:8px">店家名稱</td><td style="padding:8px">消費店家</td><td style="padding:8px">黃燜雞／高雄新興店</td></tr>
+            <tr><td style="padding:8px">金額</td><td style="padding:8px">僅數字（自動清洗）</td><td style="padding:8px">190</td></tr>
+            <tr><td style="padding:8px">影像連結</td><td style="padding:8px">Drive 檔案連結</td><td style="padding:8px">https://drive.google.com/…</td></tr>
+            <tr><td style="padding:8px">建立時間</td><td style="padding:8px">系統時間</td><td style="padding:8px">2025-10-20 09:21</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 右：IG 影片 -->
+    <div class="card">
+  <h3 style="margin:0 0 8px;color:var(--green-1)">示範影片（IG）</h3>
+
+  <!-- IG 影片嵌入 -->
+  <blockquote 
+    class="instagram-media"
+    data-instgrm-permalink="https://www.instagram.com/p/DP-wNCVkc-I/"
+    data-instgrm-version="14"
+    style="background:#FFF; border:0; margin:0 auto; max-width:540px; width:100%">
+  </blockquote>
+
+  <!-- IG 官方嵌入腳本（必要） -->
+  <script async src="//www.instagram.com/embed.js"></script>
+
+  <p class="price-note">若無法嵌入，可改放影片連結或教學圖文頁。</p>
+</div>
+
+    </div>
+
+    <!-- 流程圖預覽（預設隱藏；展開後只顯示上半段，比例不突兀） -->
+    <div class="card soft flow-card" style="margin-top:18px">
+      <h3 style="margin:0 0 8px;color:var(--green-1)">工作流程預覽</h3>
+      <details>
+        <summary style="cursor:pointer; font-weight:700; color:var(--green-2); margin-bottom:8px">
+          展開查看 n8n 自動化流程圖（LINE 發票上傳 → 雲端 + 表格）
+        </summary>
+        <div class="flow-viewport">
+          <!-- 換成你網站上的圖片路徑；此為目前檔案位置 -->
+          <img src="22\75035221-0d33-425f-901b-72431a96b20a.jfif" alt="LINE發票上傳自動化流程圖">
+        </div>
+      </details>
+      <p class="price-note" style="margin-top:8px">
+        流程重點：Webhook 接收 → 下載圖片 → 上傳雲端 → AI 辨識 → 寫入 Google Sheet → 回覆 LINE。
+      </p>
+    </div>
+
+    <div class="card soft" style="margin-top:14px">
+      <p class="price-note">看完仍覺得自己架不太起來？那這堂課就是替你設計的：現場一步步帶你完成、排錯、上線。</p>
+    </div>
+  </div>
+</section>
+<section class="section stripe" id="tutorials">
+  <div class="section-inner container">
+    <span class="eyebrow">從 0 到上線</span>
+    <h2>LINE × n8n × Google：快速串接教學</h2>
+
+    <div class="grid-2">
+      <!-- A -->
+      <div class="card">
+        <h3 style="margin:0 0 8px;color:var(--green-1)">A. 建立 LINE Messaging API</h3>
+        <ol style="margin:0; padding-left:18px; line-height:1.9; color:var(--ink-2)">
+          <li>到 LINE Developers 建立 Channel（Messaging API）。</li>
+          <li>開啟 Webhook，將 <b>n8n Webhook URL</b> 貼上並驗證。</li>
+          <li>複製 <b>Channel access token</b>，在 n8n 設定 <b>HTTP Bearer</b> 憑證（用於抓圖與回覆）。</li>
+        </ol>
+        <ul class="list" style="margin-top:6px">
+          <li><span class="dot"></span><span>抓圖片：<code>GET https://api-data.line.me/v2/bot/message/{messageId}/content</code></span></li>
+          <li><span class="dot"></span><span>回覆訊息：<code>POST https://api.line.me/v2/bot/message/reply</code>（Body 需帶 <code>replyToken</code>）</span></li>
+        </ul>
+      </div>
+
+      <!-- B -->
+      <div class="card">
+        <h3 style="margin:0 0 8px;color:var(--green-1)">B. n8n 流程骨架（與範本一致）</h3>
+        <ul class="list">
+          <li><span class="dot"></span><span><b>Webhook</b>：接 LINE 事件，取得 <code>replyToken</code> 與 <code>message.id</code></span></li>
+          <li><span class="dot"></span><span><b>HTTP Request</b>（抓圖）：用 Bearer Token 取回圖片（binary）</span></li>
+          <li><span class="dot"></span><span><b>Google Drive</b>：以 <code>message.id.jpg</code> 存入指定資料夾</span></li>
+          <li><span class="dot"></span><span><b>AI 節點</b>：提示詞限制輸出固定 JSON（號碼／日期／店家／金額）</span></li>
+          <li><span class="dot"></span><span><b>Set / If</b>：清洗欄位與缺漏檢查（例如金額只留數字）</span></li>
+          <li><span class="dot"></span><span><b>Google Sheets</b>：<b>appendOrUpdate</b> 寫入欄位</span></li>
+          <li><span class="dot"></span><span><b>HTTP Request</b>（回覆）：把結果文字回傳 LINE（帶 <code>replyToken</code>）</span></li>
+        </ul>
+      </div>
+
+      <!-- C -->
+      <div class="card">
+        <h3 style="margin:0 0 8px;color:var(--green-1)">C. 憑證與欄位設定</h3>
+        <ul class="list">
+          <li><span class="dot"></span><span>LINE：<b>HTTP Bearer</b> 憑證（Channel access token）。</span></li>
+          <li><span class="dot"></span><span>Google Drive／Sheets：用 <b>OAuth2</b> 綁定；指定資料夾與試算表。</span></li>
+          <li><span class="dot"></span><span>AI 模型：OpenAI Key；若無法使用，改用 Gemini／Claude／Perplexity（替換節點即可）。</span></li>
+        </ul>
+      </div>
+
+      <!-- D -->
+      <div class="card soft">
+        <h3 style="margin:0 0 8px;color:var(--green-1)">D. 常見錯誤 & 快速排除</h3>
+        <ul class="list">
+          <li><span class="dot"></span><span>401／403：Bearer Token 或 Google 憑證未綁對 → 重新驗證。</span></li>
+          <li><span class="dot"></span><span>圖片未存：Drive 節點需選正確 <b>binary</b> 欄位；檔名可用 <code>{{ $json.body.events[0].message.id }}.jpg</code>。</span></li>
+          <li><span class="dot"></span><span>AI 非 JSON：提示只允許 JSON；後面加 Function 做 <code>try/catch</code>。</span></li>
+          <li><span class="dot"></span><span>金額亂碼：用 Set + 正則只留數字與小數點。</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn primary" href="#signup">想現場帶著做、當場上線</a>
+      <a class="btn outline" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" download>再次下載 JSON 範本</a>
+    </div>
+  </div>
+</section>
 
   <!-- FAQ -->
-<section class="section" id="faq">
-  <!-- FAQ 前的講師/品牌信任圖 -->
-  <details>
-    <summary>沒有程式背景可以嗎？</summary>
-    <p>可以。本課完全以白話與實作帶領，你只需要願意動手做。我們會把「看不懂的名詞」都拆成日常例子。</p>
-  </details>
 
-  <details>
-    <summary>這課程適合0基礎嗎？</summary>
-    <p>非常適合。課程是針對 0 基礎設計，從思維開始帶你理解 AI 自動化背後的邏輯與應用，不只是「照做」，而是能真正學會怎麼延伸。</p>
-  </details>
-
-  <details>
-    <summary>如果不能使用 ChatGPT 怎麼辦？</summary>
-    <p>別擔心。課程會教你設定 VPN、使用其他生成式 AI 工具（如 Gemini、Perplexity、Claude 等），確保你即使沒有 ChatGPT 也能實作完成。</p>
-  </details>
-
-  <details>
-    <summary>需要帶什麼？要先安裝嗎？</summary>
-    <p>建議自備筆電。課堂會示範雲端部署（Zeabur）與本機方式，讓你了解各自優缺點。</p>
-  </details>
-
-  <details>
-    <summary>課後我能自己延伸嗎？</summary>
-    <p>可以。你會帶走 2 條模板與一套完整思維，回去就能改成你的情境；也會附上排錯清單，遇到問題不再卡關。</p>
-  </details>
-
-  <details>
-    <summary>可以舉辦其他地方嗎？</summary>
-    <p>歡迎填寫報名表單下方許願。</p>
-  </details>
-
-  <details>
-    <summary>不知道是否符合中小企業標準？</summary>
-    <p>可以填寫下方企業問卷，會有專人聯繫。記得電話要接聽，也可直接詢問 MoBagel 郭小姐｜rebeccakuo@mobagel.com｜(02) 7756-3930 #2678。</p>
-  </details>
-
-  <details>
-    <summary>要怎麼確認是否有報名成功？</summary>
-    <p>報名後會有專人以電話聯繫確認，請務必保持電話暢通。</p>
-  </details>
-
-  <details>
-    <summary>如何繳費？</summary>
-    <p>報名成功後，將由專人透過電話說明繳費方式與注意事項。</p>
-  </details>
-
-  <details>
-    <summary>課程時間與地點？</summary>
-    <p>10/31 台北場、11/29 台北場（實體）｜時間：09:00–18:30｜地點：美商行動貝果 MoBagel（台北市信義區東興路51號4樓）。</p>
-  </details>
-</section>
 
 <!-- 貼在 #signup 後面（footer 之前） -->
 <section class="section promo-offer" id="offer">
