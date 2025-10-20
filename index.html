@@ -298,7 +298,17 @@
     width: calc(100% - 120px);
   }
 }
+/* 確保所有卡片都有獨立間距 */
+#kits .card,
+#tutorials .card{
+  margin-bottom: clamp(16px, 2.5vw, 20px);
+}
 
+/* Grid 加大間距，避免卡片黏在一起 */
+#kits .grid-2,
+#tutorials .grid-2{
+  gap: clamp(18px, 3vw, 24px) !important;
+}
 /* 內層排版與字級跟著縮放（避免擠） */
 #kits h2, #tutorials h2{ font-size: clamp(22px, 3.6vw, 36px); }
 #kits h3, #tutorials h3{ font-size: clamp(16px, 2.4vw, 20px); }
@@ -328,6 +338,219 @@
 .flow-card .flow-viewport{ display:block !important; overflow:auto; border:1px solid var(--border); border-radius:0; max-height: clamp(380px, 70vh, 820px); background:#fff; }
 .flow-card .flow-viewport img{ width:100% !important; height:auto !important; object-fit:contain !important; border-radius:0 !important; transform:none !important; }
 
+/* === #kits、#tutorials 完整響應式優化 === */
+#kits.section,
+#tutorials.section{
+  width: calc(100% - 40px);
+  margin: 40px auto;
+}
+@media (min-width: 768px){
+  #kits.section,
+  #tutorials.section{
+    width: calc(100% - 120px);
+  }
+}
+
+/* 內層 padding 也要響應式 */
+#kits .section-inner,
+#tutorials .section-inner{
+  padding: clamp(18px, 3vw, 28px);
+}
+
+/* 標題字級響應式 */
+#kits h2, #tutorials h2{ font-size: clamp(22px, 3.6vw, 36px); margin-bottom: clamp(12px, 2vw, 18px); }
+#kits h3, #tutorials h3{ font-size: clamp(16px, 2.4vw, 20px); }
+
+/* === 所有卡片間距響應式 === */
+#kits .card,
+#tutorials .card{
+  padding: clamp(14px, 2.4vw, 18px);
+  margin-bottom: clamp(12px, 2vw, 14px);
+  /* 移除左右 margin，讓卡片貼齊外框 */
+}
+
+/* Grid 間距響應式 */
+#kits .grid-2, 
+#tutorials .grid-2{ 
+  align-items: start; 
+  gap: clamp(14px, 2.4vw, 18px);
+  margin-top: clamp(12px, 2vw, 16px);
+}
+
+@media (max-width: 767px){
+  #kits .grid-2, #tutorials .grid-2{ 
+    grid-template-columns: 1fr; 
+    gap: clamp(12px, 2vw, 14px);
+  }
+}
+
+/* === 表格完整響應式 === */
+#kits .card:has(table),
+#tutorials .card:has(table){ 
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#kits table, #tutorials table{
+  width: 100%;
+  min-width: 480px; /* 確保表格不會太窄 */
+  table-layout: auto; /* 改用 auto 讓內容決定寬度 */
+  border-collapse: collapse;
+  font-size: clamp(12px, 1.8vw, 14px);
+  margin: clamp(8px, 1.5vw, 12px) 0;
+}
+
+#kits th, #kits td, 
+#tutorials th, #tutorials td{
+  padding: clamp(6px, 1.2vw, 10px);
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--beige-2);
+  text-align: left;
+  vertical-align: top;
+}
+
+#kits th, #tutorials th{
+  font-weight: 700;
+  background: var(--beige-1);
+  color: var(--green-2);
+}
+
+#kits tr:last-child td, 
+#tutorials tr:last-child td{ 
+  border-bottom: 0; 
+}
+
+/* 手機上表格更緊湊 */
+@media (max-width: 480px){
+  #kits table, #tutorials table{
+    min-width: 420px;
+    font-size: 12px;
+  }
+  #kits th, #kits td,
+  #tutorials th, #tutorials td{
+    padding: 6px 8px;
+  }
+}
+
+/* === List 間距響應式 === */
+#kits .list,
+#tutorials .list{
+  gap: clamp(8px, 1.4vw, 12px);
+  margin: clamp(8px, 1.5vw, 12px) 0;
+}
+
+#kits .list li,
+#tutorials .list li{
+  font-size: clamp(13px, 1.8vw, 15px);
+  line-height: 1.6;
+}
+
+/* === CTA 按鈕間距響應式 === */
+#kits .cta-row,
+#tutorials .cta-row{
+  gap: clamp(8px, 1.6vw, 12px);
+  margin-top: clamp(14px, 2.4vw, 18px);
+  flex-wrap: wrap;
+}
+
+#kits .btn,
+#tutorials .btn{
+  padding: clamp(10px, 1.8vw, 14px) clamp(14px, 2.4vw, 20px);
+  font-size: clamp(13px, 1.8vw, 16px);
+}
+
+/* === IG 影片容器響應式 === */
+.ig-wrap{ 
+  width: 100%; 
+  max-width: 640px; 
+  margin: clamp(12px, 2vw, 16px) auto;
+  padding: 0;
+}
+
+.ig-wrap .instagram-media{
+  width: 100% !important; 
+  max-width: 100% !important; 
+  min-width: 0 !important;
+  margin: 0 auto !important;
+}
+
+/* === 流程圖預覽完整響應式 === */
+.flow-card{ 
+  margin-top: clamp(14px, 2.4vw, 18px) !important;
+  padding: clamp(14px, 2.4vw, 18px) !important;
+}
+
+.flow-card .flow-viewport{ 
+  display: block !important; 
+  overflow: auto; 
+  border: 1px solid var(--border); 
+  border-radius: 0; 
+  max-height: clamp(380px, 70vh, 820px); 
+  background: #fff;
+  margin: clamp(10px, 1.8vw, 14px) 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.flow-card .flow-viewport img{ 
+  width: 100% !important; 
+  height: auto !important; 
+  object-fit: contain !important; 
+  border-radius: 0 !important; 
+  transform: none !important;
+  display: block;
+}
+
+/* === Price Note 響應式 === */
+#kits .price-note,
+#tutorials .price-note{
+  font-size: clamp(12px, 1.6vw, 14px);
+  margin-top: clamp(8px, 1.4vw, 12px);
+  line-height: 1.5;
+}
+
+/* === Code 標籤響應式 === */
+#kits code,
+#tutorials code{
+  font-size: clamp(11px, 1.5vw, 13px);
+  padding: clamp(2px, 0.4vw, 4px) clamp(4px, 0.8vw, 6px);
+  background: var(--beige-2);
+  border-radius: 4px;
+  word-break: break-all;
+}
+
+/* === Ordered List 響應式 === */
+#kits ol,
+#tutorials ol{
+  padding-left: clamp(16px, 2.4vw, 20px);
+  margin: clamp(8px, 1.5vw, 12px) 0;
+}
+
+#kits ol li,
+#tutorials ol li{
+  font-size: clamp(13px, 1.8vw, 15px);
+  line-height: 1.7;
+  margin-bottom: clamp(6px, 1vw, 8px);
+}
+
+/* === 確保所有內容都有呼吸空間 === */
+#kits .card > *:first-child,
+#tutorials .card > *:first-child{
+  margin-top: 0;
+}
+
+#kits .card > *:last-child,
+#tutorials .card > *:last-child{
+  margin-bottom: 0;
+}
+
+/* 段落間距 */
+#kits p,
+#tutorials p{
+  margin: clamp(8px, 1.5vw, 12px) 0;
+  font-size: clamp(13px, 1.8vw, 15px);
+  line-height: 1.7;
+}
 </style>
 
 </head>
@@ -579,24 +802,24 @@
     <span class="eyebrow">從 0 到上線</span>
     <h2>LINE × n8n × Google：快速串接教學</h2>
 
-    <div class="grid-2">
+    <div class="grid-2" style="gap: clamp(18px, 3vw, 24px);">
       <!-- A -->
-      <div class="card">
-        <h3 style="margin:0 0 8px;color:var(--green-1)">A. 建立 LINE Messaging API</h3>
+      <div class="card" style="margin-bottom: clamp(16px, 2.5vw, 20px);">
+        <h3 style="margin:0 0 12px;color:var(--green-1)">A. 建立 LINE Messaging API</h3>
         <ol style="margin:0; padding-left:18px; line-height:1.9; color:var(--ink-2)">
           <li>到 LINE Developers 建立 Channel（Messaging API）。</li>
           <li>開啟 Webhook，將 <b>n8n Webhook URL</b> 貼上並驗證。</li>
           <li>複製 <b>Channel access token</b>，在 n8n 設定 <b>HTTP Bearer</b> 憑證（用於抓圖與回覆）。</li>
         </ol>
-        <ul class="list" style="margin-top:6px">
+        <ul class="list" style="margin-top:10px">
           <li><span class="dot"></span><span>抓圖片：<code>GET https://api-data.line.me/v2/bot/message/{messageId}/content</code></span></li>
           <li><span class="dot"></span><span>回覆訊息：<code>POST https://api.line.me/v2/bot/message/reply</code>（Body 需帶 <code>replyToken</code>）</span></li>
         </ul>
       </div>
 
       <!-- B -->
-      <div class="card">
-        <h3 style="margin:0 0 8px;color:var(--green-1)">B. n8n 流程骨架（與範本一致）</h3>
+      <div class="card" style="margin-bottom: clamp(16px, 2.5vw, 20px);">
+        <h3 style="margin:0 0 12px;color:var(--green-1)">B. n8n 流程骨架（與範本一致）</h3>
         <ul class="list">
           <li><span class="dot"></span><span><b>Webhook</b>：接 LINE 事件，取得 <code>replyToken</code> 與 <code>message.id</code></span></li>
           <li><span class="dot"></span><span><b>HTTP Request</b>（抓圖）：用 Bearer Token 取回圖片（binary）</span></li>
@@ -609,8 +832,8 @@
       </div>
 
       <!-- C -->
-      <div class="card">
-        <h3 style="margin:0 0 8px;color:var(--green-1)">C. 憑證與欄位設定</h3>
+      <div class="card" style="margin-bottom: clamp(16px, 2.5vw, 20px);">
+        <h3 style="margin:0 0 12px;color:var(--green-1)">C. 憑證與欄位設定</h3>
         <ul class="list">
           <li><span class="dot"></span><span>LINE：<b>HTTP Bearer</b> 憑證（Channel access token）。</span></li>
           <li><span class="dot"></span><span>Google Drive／Sheets：用 <b>OAuth2</b> 綁定；指定資料夾與試算表。</span></li>
@@ -619,8 +842,8 @@
       </div>
 
       <!-- D -->
-      <div class="card soft">
-        <h3 style="margin:0 0 8px;color:var(--green-1)">D. 常見錯誤 & 快速排除</h3>
+      <div class="card soft" style="margin-bottom: clamp(16px, 2.5vw, 20px);">
+        <h3 style="margin:0 0 12px;color:var(--green-1)">D. 常見錯誤 & 快速排除</h3>
         <ul class="list">
           <li><span class="dot"></span><span>401／403：Bearer Token 或 Google 憑證未綁對 → 重新驗證。</span></li>
           <li><span class="dot"></span><span>圖片未存：Drive 節點需選正確 <b>binary</b> 欄位；檔名可用 <code>{{ $json.body.events[0].message.id }}.jpg</code>。</span></li>
@@ -630,7 +853,7 @@
       </div>
     </div>
 
-    <div class="cta-row">
+    <div class="cta-row" style="margin-top: clamp(20px, 3vw, 28px);">
       <a class="btn primary" href="#signup">想現場帶著做、當場上線</a>
       <a class="btn outline" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" download>再次下載 JSON 範本</a>
     </div>
