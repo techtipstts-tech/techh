@@ -614,10 +614,6 @@
         <span class="k-tag">Google Drive</span><span class="k-tag">Google Sheets</span>
         <span class="k-tag">AI 節點</span><span class="k-tag">Set / If</span>
       </div>
-      <div class="k-cta">
-        <a class="k-btn k-btn-primary" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" target="_blank">下載 n8n 範本（JSON）</a>
-        <a class="k-btn k-btn-outline" href="#tutorials-new">查看快速教學 →</a>
-      </div>
     </div>
 
     <div class="k-grid">
@@ -659,54 +655,12 @@
 
     <div class="k-card k-center k-soft">
       <p>看完仍覺得自己架不太起來？那這堂課就是替你設計的：<br><strong>現場一步步帶你完成、排錯、上線</strong></p>
-      <a class="k-btn k-btn-solid" href="#signup">立即報名實戰班</a>
     </div>
   </div>
 </section>
 
 
-<section id="tutorials-new" class="t-section">
-  <div class="t-container">
-    <span class="t-eyebrow">從 0 到上線</span>
-    <h2 class="t-title">LINE × n8n × Google：快速串接教學</h2>
 
-    <div class="t-grid">
-      <div class="t-step">
-        <div class="t-step-no">A</div>
-        <h3>建立 LINE Messaging API</h3>
-        <ul class="t-list">
-          <li>到 LINE Developers 建立 Channel（Messaging API）</li>
-          <li>開啟 Webhook，將 <b>n8n Webhook URL</b> 貼上並驗證</li>
-          <li>複製 <b>Channel access token</b>，在 n8n 設定 <b>HTTP Bearer</b> 憑證</li>
-        </ul>
-        <div class="t-code"><div>抓圖片：</div><code>GET https://api-data.line.me/v2/bot/message/{messageId}/content</code></div>
-        <div class="t-code"><div>回覆訊息：</div><code>POST https://api.line.me/v2/bot/message/reply</code></div>
-      </div>
-
-      <div class="t-step">
-        <div class="t-step-no">B</div>
-        <h3>n8n 流程骨架（與範本一致）</h3>
-        <ul class="t-list">
-          <li><b>Webhook</b>：接 LINE 事件，取得 <code>replyToken</code> 與 <code>message.id</code></li>
-          <li><b>HTTP Request</b>（抓圖）：用 Bearer Token 取回圖片（binary）</li>
-          <li><b>Google Drive</b>：以 <code>message.id.jpg</code> 存入指定資料夾</li>
-          <li><b>AI 節點</b>：限制輸出固定 JSON（號碼／日期／店家／金額）</li>
-          <li><b>Set / If</b>：清洗欄位與缺漏檢查（例如金額只留數字）</li>
-          <li><b>Google Sheets</b>：<b>appendOrUpdate</b> 寫入欄位</li>
-          <li><b>HTTP Request</b>（回覆）：把結果文字回傳 LINE（帶 <code>replyToken</code>）</li>
-        </ul>
-      </div>
-
-      <div class="t-step">
-        <div class="t-step-no">C</div>
-        <h3>憑證與欄位設定</h3>
-        <ul class="t-list">
-          <li>LINE：<b>HTTP Bearer</b> 憑證（Channel access token）</li>
-          <li>Google Drive／Sheets：用 <b>OAuth2</b> 綁定；指定資料夾與試算表</li>
-          <li>AI 模型：OpenAI Key；無法使用時可改 Gemini／Claude／Perplexity</li>
-        </ul>
-        <div class="t-tip"><strong>💡 提示：</strong> 先在測試環境驗證憑證，再正式部署</div>
-      </div>
 
       <div class="t-step t-alert">
         <div class="t-step-no">D</div>
@@ -722,12 +676,7 @@
 
     <div class="t-final">
       <h3>準備好動手實作了嗎？</h3>
-      <p>加入實戰班，現場帶著做、當場上線，所有疑問立即解答</p>
-      <div class="t-cta">
-        <a class="t-btn t-btn-primary" href="#signup">我要現場學習</a>
-        <a class="t-btn t-btn-outline" href="https://drive.google.com/drive/folders/17NWQE8KZ2pG1Kc_DQ5hPAHiLOEOCsxuz?usp=sharing" target="_blank">下載 JSON 範本</a>
-      </div>
-    </div>
+      <p>加入實戰班，現場帶著做，所有疑問立即解答</p>
   </div>
 </section>
 
